@@ -7,6 +7,7 @@ import { motion, Variants } from "framer-motion";
 import { useStateContext } from "@/contexts/ContextProvider";
 import { links } from "@/constants";
 import { MenuButton } from "./menuButton";
+import { MdSettingsInputComponent } from "react-icons/md";
 
 const Navbar = () => {
   const { currentColor, activeMenu, setActiveMenu } = useStateContext();
@@ -14,7 +15,7 @@ const Navbar = () => {
   const pathName = usePathname();
 
   return (
-    <div className="fixed top-6 right-6 z-10">
+    <div className=" fixed top-6 right-6 z-10">
       <motion.nav
         initial={false}
         animate={activeMenu ? "open" : "closed"}
@@ -63,18 +64,26 @@ const Navbar = () => {
         >
           {links.map(({ title, link, icon }) => (
             <motion.li
-              whileHover={{
-                color: currentColor,
-              }}
               style={{
-                color: pathName === link ? currentColor : "#fff",
+                color: pathName === link ? currentColor : "#fffffc",
                 pointerEvents: pathName === link ? "none" : "auto",
               }}
               className="cursor-pointer mt-2 mb-4 text-lg  font-semibold uppercase"
+              onClick={() => setActiveMenu(false)}
             >
-              <Link href={link} className="flex items-center gap-3">
+              <Link
+                href={link}
+                className="flex items-center gap-3 relative group hover:scale-105 ease-in-out duration-200"
+              >
                 {icon}
                 {title}
+                <span
+                  style={{ backgroundColor: currentColor }}
+                  className="h-[2px] inline-block w-0 absolute left-0 -bottom-0.5
+                  group-hover:w-full transition-[width] ease duration-300"
+                >
+                  &nbsp;
+                </span>
               </Link>
             </motion.li>
           ))}

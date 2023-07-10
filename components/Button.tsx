@@ -1,12 +1,10 @@
 import { twMerge } from "tailwind-merge";
 import { forwardRef } from "react";
-import { useStateContext } from "@/contexts/ContextProvider";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, children, disabled, type = "button", ...props }, ref) => {
-    const { currentColor } = useStateContext;
     return (
       <button
         type={type}

@@ -61,7 +61,7 @@ export const links = [
   },
   {
     title: "about",
-    link: "",
+    link: "/about",
     icon: <BsFillFileTextFill />,
   },
   {

@@ -6,6 +6,7 @@ import { useStateContext } from "@/contexts/ContextProvider";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import AnimationTest from "../components/AnimationTest";
+import Link from "next/link";
 
 export default function Home() {
   const { currentMode, currentColor } = useStateContext();
@@ -47,11 +48,10 @@ export default function Home() {
             <Cursor cursorColor={currentColor} />
           </span>
           <Button
-            onClick={() => router.push("/about")}
             style={{ backgroundColor: currentColor }}
             className=" z-30 rounded-none shadow-custom tracking-widest mt-14 text-basic-white w-[300px] px-10 uppercase font-semibold text-xl"
           >
-            More about me
+            <Link href="/about">More about me</Link>
           </Button>
         </div>
       </div>

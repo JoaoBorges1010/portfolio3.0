@@ -24,7 +24,7 @@ const ThemeSettings = () => {
   return (
     <AnimatePresence>
       <div className={currentMode === "Dark" ? "dark" : ""}>
-        <div className="fixed right-6 bottom-[10%]  z-40">
+        <div className="fixed right-6 bottom-[10%] z-40">
           {!themeSettings && (
             <button
               type="button"
