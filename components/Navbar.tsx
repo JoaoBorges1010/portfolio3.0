@@ -7,7 +7,6 @@ import { motion, Variants } from "framer-motion";
 import { useStateContext } from "@/contexts/ContextProvider";
 import { links } from "@/constants";
 import { MenuButton } from "./menuButton";
-import { MdSettingsInputComponent } from "react-icons/md";
 
 const Navbar = () => {
   const { currentColor, activeMenu, setActiveMenu } = useStateContext();
@@ -70,10 +69,11 @@ const Navbar = () => {
               }}
               className="cursor-pointer mt-2 mb-4 text-lg  font-semibold uppercase"
               onClick={() => setActiveMenu(false)}
+              key={title}
             >
               <Link
                 href={link}
-                className="flex items-center gap-3 relative group hover:scale-105 ease-in-out duration-200"
+                className="flex items-center gap-3  relative group hover:scale-105 ease-in-out duration-200"
               >
                 {icon}
                 {title}

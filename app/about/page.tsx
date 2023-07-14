@@ -1,8 +1,8 @@
 "use client";
 
 import Button from "@/components/Button";
+import Skills from "@/components/Skills";
 import { useStateContext } from "@/contexts/ContextProvider";
-import Link from "next/link";
 
 const About = () => {
   const { currentMode, currentColor } = useStateContext();
@@ -24,7 +24,8 @@ const About = () => {
             </span>
           </h3>
         </div>
-        <div className="max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] px-4 mb-[100px] mx-auto">
+        {/* ABOUT SECTION */}
+        <section className="max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] px-4 mb-[100px] mx-auto">
           <div className="mx-[-15px] p-4 flex flex-col lg:flex-row">
             <div className="px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px] ">
               <img
@@ -56,14 +57,15 @@ const About = () => {
                     style={{ backgroundColor: currentColor }}
                     className="rounded-none px-10 py-3 shadow-custom mt-10 text-basic-white uppercase font-semibold"
                   >
-                    Download my cv
+                    Download resume
                   </Button>
                 </a>
               </div>
             </div>
           </div>
-        </div>
-        <div className="w-full h-full p-10 flex flex-col justify-center items-center dark:bg-light-gray bg-[#f7f7f7]">
+        </section>
+        {/* EDUCATION SECTION */}
+        <section className="w-full h-full p-10 flex flex-col justify-center items-center dark:bg-light-gray bg-[#f7f7f7]">
           <div style={{ borderColor: currentColor }} className="border-b-2">
             <h1 className="font-header text-4xl font-bold">Education</h1>
           </div>
@@ -85,7 +87,14 @@ const About = () => {
               rutrum varius eros, eget consectetur quam dictum faucibus.
             </p>
           </div>
-        </div>
+        </section>
+        {/* SKILLS SECTION */}
+        <section className="h-full w-full p-10 flex flex-col justify-center items-center">
+          <div style={{ borderColor: currentColor }} className="border-b-2">
+            <h1 className="font-header text-4xl font-bold">Skills</h1>
+          </div>
+          <Skills />
+        </section>
       </div>
     </div>
   );
