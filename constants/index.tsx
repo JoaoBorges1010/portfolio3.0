@@ -66,7 +66,7 @@ export const links = [
   },
   {
     title: "portfolio",
-    link: "",
+    link: "/portfolio",
     icon: <MdWork />,
   },
   {
