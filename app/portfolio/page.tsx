@@ -1,9 +1,7 @@
 "use client";
 
-import Card from "@/components/Card";
 import ProjectGallery from "@/components/ProjectGallery";
 import { useStateContext } from "@/contexts/ContextProvider";
-import React from "react";
 
 const Portfolio = () => {
   const { currentMode, currentColor } = useStateContext();
