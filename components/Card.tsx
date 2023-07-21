@@ -1,7 +1,12 @@
 "use client";
 
+import { FaInfoCircle } from "react-icons/fa";
+
 import { useStateContext } from "@/contexts/ContextProvider";
-import { github } from "@/data/projects";
+import { github as Icon } from "@/data/projects";
+import { projectsData } from "@/data/projects";
+import { AnimatePresence } from "framer-motion";
+import Modal from "./Modal";
 
 interface CardProps {
   id: string;
@@ -11,8 +16,12 @@ interface CardProps {
   details: Array<string>;
   image: string;
   link: string;
+  demo?: string;
   active: string;
+  selectedId: string;
+  setSelectedId: (value: string) => void;
   handleClick: (value: string) => void;
+  onClick: (value: string) => void;
 }
 
 const Card = ({
@@ -23,12 +32,17 @@ const Card = ({
   details,
   image,
   link,
+  demo,
   active,
   handleClick,
+  onClick,
+  selectedId,
+  setSelectedId,
 }: CardProps) => {
   const { currentColor } = useStateContext();
 
-  console.log(active);
+  const getSelected: any = (id: string) =>
+    projectsData.find((elem) => elem.id === id);
 
   return (
     <div
@@ -37,7 +51,7 @@ const Card = ({
       className={`relative ${
         active === id ? "lg:flex-[3.5] flex-[10]" : "lg:flex-[0.5] flex-[2]"
       }
-    flex items-center justify-center min-w-[170px] h-[420px] cursor-pointer rounded-[24px]`}
+    flex items-center justify-center min-w-[170px] h-[420px] cursor-pointer rounded-md`}
     >
       <div
         className="absolute bg-dark top-0 left-0 z-10 w-full
@@ -62,18 +76,14 @@ const Card = ({
         <>
           <div
             className="absolute bottom-0 p-8 justify-start w-full flex-col bg-[rgba(122,122,122,0.5)]
-            rounded-b-[24px] z-20"
+            rounded-b-md z-20"
           >
             <div className="absolute top-2 right-2">
               <div
                 className="bg-dark sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center
                 cursor-pointer sm:opacity-[0.9] opacity-[0.8]"
               >
-                <img
-                  src={github}
-                  alt="Source Code"
-                  className="w-4/5 h-4/5 object-contain"
-                />
+                <Icon className="w-4/5 h-4/5" />
               </div>
             </div>
             <h2
@@ -83,31 +93,48 @@ const Card = ({
               {title}
             </h2>
             <p
-              className="text-basic-white sm:text-[14px] text-[12px] max-w-3xl sm:leading-[24px]
+              className="text-basic-white capitalize sm:text-[14px] text-[12px] max-w-3xl sm:leading-[24px]
               leading-[18px] tracking-[1px]"
             >
               {description}
             </p>
             <div className="z-50">
               <button
+                onClick={onClick}
                 style={{ backgroundColor: currentColor }}
                 className="flex justify-between sm:text-[16px] text-[14px] text-basic-white font-bold
               items-center py-5 pl-2 pr-3 whitespace-nowrap gap-1 sm:w-[138px] sm:h-[50px] w-[125px] h-[46px]
-              rounded-[10px] sm:mt-[22px] mt-[16px] hover:opacity-70 hover:font-header transition duration-[0.2s]
-              ease-in-out shadow-custom"
+              rounded-[10px] sm:mt-[22px] mt-[16px] hover:opacity-70 hover:uppercase hover:scale-110 transition duration-300
+              ease-in shadow-custom"
               >
-                <img
-                  src={github}
-                  alt="Source Code"
+                <FaInfoCircle
                   className="sm:w-[34px] sm:h-[34px]
                   w-[30px] h-[30px] object-contain"
                 />
-                <a className="" href="www.google.com" target="_blank">
-                  Live Demo
-                </a>
+                <h1>Details</h1>
               </button>
             </div>
           </div>
+          <AnimatePresence
+            initial={false}
+            mode="wait"
+            onExitComplete={() => null}
+          >
+            {selectedId && (
+              <Modal
+                key={selectedId}
+                id={selectedId}
+                title={getSelected(selectedId).title}
+                skills={getSelected(selectedId).skills}
+                description={getSelected(selectedId).description}
+                details={getSelected(selectedId).details}
+                image={getSelected(selectedId).image}
+                link={getSelected(selectedId).link}
+                demo={getSelected(selectedId).demo}
+                handleClose={() => setSelectedId("")}
+              />
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>

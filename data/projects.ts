@@ -1,31 +1,41 @@
-const react =
-  "https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png";
-const javascript =
-  "https://user-images.githubusercontent.com/25181517/117447155-6a868a00-af3d-11eb-9cfe-245df15c9f3f.png";
-const html =
-  "https://user-images.githubusercontent.com/25181517/192158954-f88b5814-d510-4564-b285-dff7d6400dad.png";
-const rubyOnRails =
-  "https://user-images.githubusercontent.com/25181517/192603748-3ac17112-3653-4257-80da-a57334b11411.png";
-const css =
-  "https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png";
-const ruby =
-  "https://user-images.githubusercontent.com/25181517/192603745-7d34df9e-7756-4756-a539-6a61badf7a80.png";
-const tailwind =
-  "https://user-images.githubusercontent.com/25181517/202896760-337261ed-ee92-4979-84c4-d4b829c7355d.png";
-const redux =
-  "https://user-images.githubusercontent.com/25181517/187896150-cc1dcb12-d490-445c-8e4d-1275cd2388d6.png";
-const typescript =
-  "https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png";
-export const github =
-  "https://user-images.githubusercontent.com/25181517/192108374-8da61ba1-99ec-41d7-80b8-fb2f7c0a4948.png";
+import {
+  SiBootstrap,
+  SiCss3,
+  SiGithub,
+  SiHtml5,
+  SiJavascript,
+  SiNextdotjs,
+  SiPostgresql,
+  SiReact,
+  SiRedux,
+  SiRuby,
+  SiRubyonrails,
+  SiTailwindcss,
+  SiTypescript,
+} from "react-icons/si";
+
+const react = SiReact;
+const javascript = SiJavascript;
+const html = SiHtml5;
+const rubyOnRails = SiRubyonrails;
+const css = SiCss3;
+const ruby = SiRuby;
+const tailwind = SiTailwindcss;
+const redux = SiRedux;
+const typescript = SiTypescript;
+export const github = SiGithub;
+const bootstrap = SiBootstrap;
+const postgresql = SiPostgresql;
+const nextjs = SiNextdotjs;
 
 export const projectsData = [
   {
     id: "project-1",
     title: "Daily Bites",
-    skills: [rubyOnRails, javascript, html, css, ruby],
-    description: "Fullstack Meals web-app",
+    skills: [ruby, rubyOnRails, css, html, javascript, bootstrap, postgresql],
+    description: "Le wagon final meal project",
     details: [
+      "Fullstack Meals web-app",
       "Meal search by ingredients",
       "Adding to favorites",
       "Profile page",
@@ -37,11 +47,12 @@ export const projectsData = [
     image:
       "https://github.com/miguelgon97/DAILY_BITES/blob/master/app/assets/images/db.png?raw=true",
     link: "https://github.com/miguelgon97/DAILY_BITES",
+    demo: "#",
   },
   {
     id: "project-2",
     title: "Weather App",
-    description: "React app",
+    description: "Small weather application using React and tailwind",
     skills: [react, javascript, html, tailwind],
     details: [
       "API data fetching and formatting",
@@ -53,8 +64,9 @@ export const projectsData = [
   },
   {
     id: "project-3",
-    title: "CRUD app",
-    description: "Simple posts application",
+    title: "Posts app",
+    description:
+      "Simple CRUD application using React with ruby on rails and typescript",
     skills: [rubyOnRails, react, ruby, redux, tailwind, css, html, typescript],
     details: [
       "Ruby on Rails as the Backend",
@@ -68,8 +80,8 @@ export const projectsData = [
   },
   {
     id: "project-4",
-    title: "CRUD app",
-    description: "React app",
+    title: "Books app",
+    description: "a User has books, books have images! CRUD app randomizer",
     skills: [react, javascript, redux, tailwind, css, html],
     details: [
       "DB creation with different tables",

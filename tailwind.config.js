@@ -29,6 +29,9 @@ module.exports = {
       boxShadow: {
         custom: "0 0 10px rgba(0, 0, 0, 0.35)",
       },
+      animation: {
+        "ping-slow": "ping 2s ease-in-out infinite",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
