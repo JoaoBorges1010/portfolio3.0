@@ -2,15 +2,28 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
+interface StateContextProps {
+  currentColor: string;
+  currentMode: string;
+  themeSettings: boolean;
+  activeMenu: boolean;
+  setCurrentColor: (value: string) => void;
+  setCurrentMode: (value: string) => void;
+  setThemeSettings: (value: boolean) => void;
+  setActiveMenu: (value: boolean) => void;
+  setMode: (value: string) => void;
+  setColor: (value: string) => void;
+}
+
 // @ts-ignore
-const StateContext = createContext();
+const StateContext = createContext<StateContextProps>();
 
 export const ContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [currentColor, setCurrentColor] = useState("#00bcd4");
+  const [currentColor, setCurrentColor] = useState("#ff5722");
   const [currentMode, setCurrentMode] = useState("Dark");
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(false);

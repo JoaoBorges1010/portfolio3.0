@@ -1,17 +1,19 @@
 "use client";
 
 import { FaInfoCircle } from "react-icons/fa";
+import { IconType } from "react-icons";
+import { MouseEventHandler } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import { useStateContext } from "@/contexts/ContextProvider";
 import { github as Icon } from "@/data/projects";
 import { projectsData } from "@/data/projects";
-import { AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
 
 interface CardProps {
   id: string;
   title: string;
-  skills: Array<string>;
+  skills: Array<IconType>;
   description: string;
   details: Array<string>;
   image: string;
@@ -21,7 +23,7 @@ interface CardProps {
   selectedId: string;
   setSelectedId: (value: string) => void;
   handleClick: (value: string) => void;
-  onClick: (value: string) => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Card = ({
@@ -49,9 +51,9 @@ const Card = ({
       onClick={() => handleClick(id)}
       style={{ boxShadow: `0 0 10px ${currentColor}` }}
       className={`relative ${
-        active === id ? "lg:flex-[3.5] flex-[10]" : "lg:flex-[0.5] flex-[2]"
+        active === id ? " lg:w-[400px]" : "lg:w-[170px] h-[60px] lg:h-[420px]"
       }
-    flex items-center justify-center min-w-[170px] h-[420px] cursor-pointer rounded-md`}
+    flex items-center justify-center lg:min-w-[170px] w-full h-[420px] cursor-pointer rounded-md`}
     >
       <div
         className="absolute bg-dark top-0 left-0 z-10 w-full

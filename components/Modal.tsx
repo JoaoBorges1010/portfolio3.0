@@ -3,13 +3,14 @@ import { github as Icon } from "@/data/projects";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
+import { IconType } from "react-icons";
 import { BsPlayCircle } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 
 interface ModalProps {
   id: string;
   title: string;
-  skills: Array<string>;
+  skills: Array<IconType>;
   description: string;
   details: Array<string>;
   image: string;
