@@ -14,7 +14,7 @@ const Navbar = () => {
   const pathName = usePathname();
 
   return (
-    <div className=" fixed top-6 right-6 z-10">
+    <div className=" fixed top-6 right-6 z-50">
       <motion.nav
         initial={false}
         animate={activeMenu ? "open" : "closed"}

@@ -33,7 +33,7 @@ export const projectsData = [
     id: "project-1",
     title: "Daily Bites",
     skills: [ruby, rubyOnRails, css, html, javascript, bootstrap, postgresql],
-    description: "Le wagon final meal project",
+    description: "Le wagon final project",
     details: [
       "Fullstack Meals web-app",
       "Meal search by ingredients",

@@ -71,7 +71,7 @@ export const links = [
   },
   {
     title: "contact",
-    link: "",
+    link: "/contact",
     icon: <BiSolidContact />,
   },
 ];

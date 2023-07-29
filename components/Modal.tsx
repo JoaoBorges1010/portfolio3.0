@@ -81,7 +81,7 @@ const Modal = ({
           className="z-[9000] fixed drop-shadow-md border border-neutral-700 top-[50%]
               left-[50%] h-[90vh] w-[90vw]  sm:h-auto md:max-h-[90vh] sm:w-[90vw]
               sm:max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-800
-              p-[25px] focus:outline-none overflow-y-auto md:overflow-y-hidden"
+              p-[25px] focus:outline-none overflow-y-auto no-scrollbar"
         >
           <img className="w-full h-[30vh]" src={image} alt={title} />
           <div className="flex mt-4 mb-6 flex-row gap-3">

@@ -3,7 +3,7 @@
 import { FaInfoCircle } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { MouseEventHandler } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { useStateContext } from "@/contexts/ContextProvider";
 import { github as Icon } from "@/data/projects";
@@ -29,12 +29,8 @@ interface CardProps {
 const Card = ({
   id,
   title,
-  skills,
   description,
-  details,
   image,
-  link,
-  demo,
   active,
   handleClick,
   onClick,
@@ -51,9 +47,9 @@ const Card = ({
       onClick={() => handleClick(id)}
       style={{ boxShadow: `0 0 10px ${currentColor}` }}
       className={`relative ${
-        active === id ? " lg:w-[400px]" : "lg:w-[170px] h-[60px] lg:h-[420px]"
+        active === id ? " md:w-[400px]" : "md:w-[170px] h-[60px] md:h-[420px]"
       }
-    flex items-center justify-center lg:min-w-[170px] w-full h-[420px] cursor-pointer rounded-md`}
+    flex items-center justify-center md:min-w-[170px] w-full h-[420px] cursor-pointer rounded-md transition-all duration-200 ease-in-out`}
     >
       <div
         className="absolute bg-dark top-0 left-0 z-10 w-full
@@ -68,7 +64,7 @@ const Card = ({
         <div className="flex items-center justify-start pr-[4.5rem]">
           <h3
             className="font-bold text-basic-white uppercase w-[200px] h-[30px] whitespace-nowrap sm:text-[27px]
-              text-[18px] tracking-[1px] absolute lg:bottom-[7rem] lg:-rotate-90 lg:origin-[0,0]
+              text-[18px] tracking-[1px] absolute md:bottom-[7rem] md:-rotate-90 md:origin-[0,0]
               leading-none z-20"
           >
             {title}
@@ -76,7 +72,18 @@ const Card = ({
         </div>
       ) : (
         <>
-          <div
+          <motion.div
+            initial={{
+              opacity: 0,
+              scale: 0,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
             className="absolute bottom-0 p-8 justify-start w-full flex-col bg-[rgba(122,122,122,0.5)]
             rounded-b-md z-20"
           >
@@ -116,7 +123,7 @@ const Card = ({
                 <h1>Details</h1>
               </button>
             </div>
-          </div>
+          </motion.div>
           <AnimatePresence
             initial={false}
             mode="wait"

@@ -31,8 +31,8 @@ const ProjectGallery = () => {
     projectsData.find((elem) => elem.id === id);
 
   return (
-    <div className="w-full flex lg:justify-start justify-center items-center lg:overflow-x-auto no-scrollbar p-10">
-      <div className="flex lg:flex-row  flex-col justify-start items- w-full lg:min-w-max h-full lg:pl-[80px] gap-5">
+    <div className="w-full flex md:justify-start justify-center items-center md:overflow-x-auto no-scrollbar p-10">
+      <div className="flex md:flex-row  flex-col justify-start items-center w-full md:min-w-max h-full md:pl-[80px] gap-5">
         {projectsData.map(
           ({ id, title, skills, description, details, image, link, demo }) => (
             <Card
