@@ -52,7 +52,7 @@ const Card = ({
     flex items-center justify-center md:min-w-[170px] w-full h-[420px] cursor-pointer rounded-md transition-all duration-200 ease-in-out`}
     >
       <div
-        className="absolute bg-dark top-0 left-0 z-10 w-full
+        className="absolute dark:bg-dark bg-lighter-gray top-0 left-0 z-10 w-full
       h-full opacity-[0.5] rounded-[24px]"
       ></div>
       <img
@@ -89,7 +89,7 @@ const Card = ({
           >
             <div className="absolute top-2 right-2">
               <div
-                className="bg-dark sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center
+                className="dark:bg-dark bg-lighter-gray sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center
                 cursor-pointer sm:opacity-[0.9] opacity-[0.8]"
               >
                 <Icon className="w-4/5 h-4/5" />

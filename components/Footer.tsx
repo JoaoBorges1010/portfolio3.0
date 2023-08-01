@@ -5,18 +5,17 @@ import { motion } from "framer-motion";
 import { useStateContext } from "@/contexts/ContextProvider";
 import { SocialIcon } from "react-social-icons";
 import { usePathname } from "next/navigation";
+import HoveredIcon from "./HoveredIcon";
 
 const Footer = () => {
   const { currentMode, currentColor } = useStateContext();
 
   const pathName = usePathname();
 
-  console.log(pathName);
-
   if (pathName === "/") {
     return (
       <div className={currentMode === "Dark" ? "dark" : ""}>
-        <div className="bottom-0 mb-4 w-full dark:text-basic-white text-dark px-14 fixed flex justify-between items-center">
+        <div className="invisible sm:visible bottom-0 mb-4 w-full dark:text-basic-white text-dark px-14 fixed flex justify-between items-center">
           <motion.div
             initial={{
               x: -500,
@@ -62,21 +61,23 @@ const Footer = () => {
             <motion.div
               whileHover={{
                 y: -2,
+                scale: 2,
               }}
               whileTap={{ scale: 0.9 }}
             >
-              <SocialIcon
-                url="https://github.com/JoaoBorges1010"
-                target="blank"
-                fgColor={currentMode === "Light" ? "#292929" : "#fffffc"}
+              <HoveredIcon
+                link="https://github.com/JoaoBorges1010"
+                className=" rounded-full ease-in duration-100"
                 bgColor="transparent"
               />
             </motion.div>
-            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.9 }}>
-              <SocialIcon
-                url="https://www.linkedin.com/in/joaoborges1010"
-                target="blank"
-                fgColor={currentMode === "Light" ? "#292929" : "#fffffc"}
+            <motion.div
+              whileHover={{ y: -2, scale: 2 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <HoveredIcon
+                link="https://www.linkedin.com/in/joaoborges1010"
+                className=" rounded-full ease-in duration-100"
                 bgColor="transparent"
               />
             </motion.div>

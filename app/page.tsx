@@ -34,14 +34,18 @@ export default function Home() {
       <div className="h-screen flex justify-center items-center">
         <AnimationTest />
         <div className="flex flex-col justify-center items-center">
-          <h1 className="dark:text-basic-white text-center text-dark font-header font-medium text-8xl">
+          <h1
+            className="dark:text-basic-white text-center text-dark font-header font-medium
+              text-[35px] leading-[35px] sm:text-[45px] sm:leading-[45px] md:text-[60px] md:leading-[60px]
+              lg:text-[90px] lg:leading-[90px]  xl:text-[130px] xl:leading-[130px]"
+          >
             Hi ! I'm{" "}
             <span style={{ color: currentColor }} className="">
               João Borges
             </span>
           </h1>
           <span
-            className="mt-10 text-center tracking-wider dark:text-basic-white text-dark font-bold
+            className="mt-10 text-center tracking-wider dark:text-basic-white text-dark font-light
            text-lg"
           >
             {text}
@@ -49,7 +53,7 @@ export default function Home() {
           </span>
           <Button
             style={{ backgroundColor: currentColor }}
-            className=" z-30 rounded-none shadow-custom tracking-widest mt-14 text-basic-white w-[300px] px-10 uppercase font-semibold text-xl"
+            className=" z-30 rounded-none shadow-custom mt-14 text-basic-white w-[300px] px-10 uppercase font-medium text-xl"
           >
             <Link href="/about">More about me</Link>
           </Button>

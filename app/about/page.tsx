@@ -3,6 +3,10 @@
 import Button from "@/components/Button";
 import Skills from "@/components/Skills";
 import { useStateContext } from "@/contexts/ContextProvider";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaCakeCandles, FaFlag, FaLocationDot } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { SiFuturelearn } from "react-icons/si";
 
 const About = () => {
   const { currentMode, currentColor } = useStateContext();
@@ -22,8 +26,8 @@ const About = () => {
         </div>
         {/* ABOUT SECTION */}
         <section className="max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] px-4 mb-[100px] mx-auto">
-          <div className="mx-[-15px] p-4 flex flex-col lg:flex-row">
-            <div className="px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px] ">
+          <div className="mx-[-15px] p-4 grid grid-cols-12">
+            <div className="col-span-12 lg:col-span-5 px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px] ">
               <img
                 src="/assets/profilePhoto.jpg"
                 alt="Profile Photo"
@@ -31,9 +35,9 @@ const About = () => {
                 className="w-full h-auto rounded-sm "
               />
             </div>
-            <div className="flex flex-col">
+            <div className="col-span-12 lg:col-span-7">
               <div className="px-4 pt-10 lg:pt-4 xl:pt-20">
-                <p className="text-[17px] leading-[34px] font-normal">
+                <p className="text-[17px] leading-[34px] text-left">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Mauris rutrum varius eros, eget consectetur quam dictum
                   faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -41,22 +45,91 @@ const About = () => {
                   faucibus. elit.
                 </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 px-4 pt-4">
-                <div className="col-span-1 mt-4 gap-5">Birthdate</div>
-                <div className="col-span-1 mt-4 gap-5">Nationality</div>
-                <div className="col-span-1 mt-4 gap-5">Phone</div>
-                <div className="col-span-1 mt-4 gap-5">Adress</div>
-                <div className="col-span-1 mt-4 gap-5">Email</div>
-                <div className="col-span-1 mt-4 gap-5">experience</div>
-                <a className="col-span-1" href="#">
-                  <Button
-                    style={{ backgroundColor: currentColor }}
-                    className="rounded-none px-10 py-3 shadow-custom mt-10 text-basic-white uppercase font-semibold"
-                  >
-                    Download resume
-                  </Button>
-                </a>
+              <div className="grid grid-cols-12 px-[-15px] pt-4 whitespace-nowrap">
+                <div className="flex col-span-12 md:col-span-6 px-[15px]">
+                  <ul className=" mt-[9px] mb-[10px] sm:mb-[26px] mx-0 w-full">
+                    <li>
+                      {" "}
+                      <p className="text-[17px] mb-[12px] font-semibold leading-[34px] flex items-center">
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          <FaCakeCandles size={20} />
+                        </span>
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          Birthdate :
+                        </span>
+                        October, 1989
+                      </p>
+                    </li>
+                    <li>
+                      <p className="text-[17px] mb-[12px] font-semibold leading-[34px] flex items-center">
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          <FaFlag size={20} />
+                        </span>
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          Nationality :
+                        </span>
+                        Portuguese
+                      </p>
+                    </li>
+                    <li>
+                      <p className="text-[17px] mb-[12px] mr-4  font-semibold leading-[34px] flex items-center">
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          <FaPhoneAlt size={20} />
+                        </span>
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          Phone :
+                        </span>
+                        +351 93 645 79 57
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <div className="flex col-span-12 md:col-span-6 px-[15px]">
+                  <ul className="mt-[9px] mb-[26px] w-full">
+                    <li>
+                      <p className="text-[17px] mb-[12px] font-semibold leading-[34px] flex items-center">
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          <FaLocationDot size={20} />
+                        </span>
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          Address :
+                        </span>
+                        Lisbon, PT
+                      </p>
+                    </li>
+                    <li>
+                      <p className="text-[17px] mb-[12px] font-semibold leading-[34px] flex items-center">
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          <SiFuturelearn size={20} />
+                        </span>
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          Experience :
+                        </span>
+                        rookie
+                      </p>
+                    </li>
+                    <li>
+                      <p className="text-[17px] mb-[12px]  font-semibold leading-[34px] flex items-center">
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          <MdEmail size={20} />
+                        </span>
+                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
+                          Email :
+                        </span>
+                        joaoborgesbiz@gmail.com
+                      </p>
+                    </li>
+                  </ul>
+                </div>
               </div>
+              <a className="col-span-6" href="#">
+                <Button
+                  style={{ backgroundColor: currentColor }}
+                  className="rounded-none px-10 py-3 shadow-custom ml-[15px] text-basic-white uppercase font-semibold"
+                >
+                  Download resume
+                </Button>
+              </a>
             </div>
           </div>
         </section>
