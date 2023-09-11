@@ -9,6 +9,7 @@ import { useStateContext } from "@/contexts/ContextProvider";
 import { github as Icon } from "@/data/projects";
 import { projectsData } from "@/data/projects";
 import Modal from "./Modal";
+import Link from "next/link";
 
 interface CardProps {
   id: string;
@@ -32,6 +33,7 @@ const Card = ({
   description,
   image,
   active,
+  link,
   handleClick,
   onClick,
   selectedId,
@@ -92,7 +94,9 @@ const Card = ({
                 className="dark:bg-dark bg-lighter-gray sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center
                 cursor-pointer sm:opacity-[0.9] opacity-[0.8]"
               >
-                <Icon className="w-4/5 h-4/5" />
+                <Link className="w-4/5 h-4/5" href={link} target="_blank">
+                  <Icon size={35} />
+                </Link>
               </div>
             </div>
             <h2
