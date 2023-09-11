@@ -30,12 +30,10 @@ export const ContextProvider = ({
 
   const setMode = (e: any) => {
     setCurrentMode(e.target.value);
-    localStorage.setItem("themeMode", e.target.value);
   };
 
   const setColor = (color: string) => {
     setCurrentColor(color);
-    localStorage.setItem("colorMode", color);
   };
 
   return (
