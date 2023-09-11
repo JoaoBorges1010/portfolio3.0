@@ -44,7 +44,7 @@ export default function Home() {
             style={{ backgroundColor: currentColor }}
             className=" z-30 rounded-none shadow-custom mt-14 text-basic-white w-[300px] px-10 uppercase font-medium text-xl"
           >
-            <Link href="/about?_rsc=a768e99">More about me</Link>
+            <Link href="/about">More about me</Link>
           </Button>
         </div>
       </div>
