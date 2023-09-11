@@ -1,10 +1,12 @@
 "use client";
 
 import ProjectGallery from "@/components/ProjectGallery";
+import TransitionEffect from "@/components/TransitionEffect";
 import { useStateContext } from "@/contexts/ContextProvider";
 
 const Portfolio = () => {
   const { currentMode, currentColor } = useStateContext();
+
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="min-h-screen overflow-hidden  dark:bg-dark bg-basic-white text-dark-text pb-[2.9em] dark:text-basic-white">

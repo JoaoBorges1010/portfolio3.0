@@ -76,7 +76,7 @@ const ThemeSettings = () => {
                         name="theme"
                         value="Light"
                         className="cursor-pointer invisible"
-                        onChange={setMode}
+                        onChange={setMode as any}
                         checked={currentMode === "Light"}
                       />
                       <span
@@ -106,7 +106,7 @@ const ThemeSettings = () => {
                         id="dark"
                         name="theme"
                         value="Dark"
-                        onChange={setMode}
+                        onChange={setMode as any}
                         className="cursor-pointer invisible"
                         checked={currentMode === "Dark"}
                       />

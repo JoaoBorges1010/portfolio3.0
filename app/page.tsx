@@ -1,33 +1,22 @@
 "use client";
 
 import { Cursor, useTypewriter } from "react-simple-typewriter";
+import { motion } from "framer-motion";
 
 import { useStateContext } from "@/contexts/ContextProvider";
 import Button from "@/components/Button";
-import { useRouter } from "next/navigation";
+
 import AnimationTest from "../components/AnimationTest";
 import Link from "next/link";
 
 export default function Home() {
   const { currentMode, currentColor } = useStateContext();
 
-  const router = useRouter();
-
   const [text, count] = useTypewriter({
     words: ["I'm a full stack web-developer", "<I Love to Code />"],
     loop: true,
     delaySpeed: 2000,
   });
-
-  // NOT WORKING CHECKING SOLUTION
-  // useEffect(() => {
-  //   const currentThemeColor = localStorage.getItem('colorMode');
-  //   const currentThemeMode = localStorage.getItem('themeMode');
-  //   if (currentThemeColor && currentThemeMode) {
-  //     setCurrentColor(currentThemeColor);
-  //     setCurrentMode(currentThemeMode);
-  //   }
-  // }, []);
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>

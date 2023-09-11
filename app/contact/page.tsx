@@ -7,6 +7,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { useStateContext } from "@/contexts/ContextProvider";
 import ContactForm from "@/components/ContactForm";
 import HoveredIcon from "@/components/HoveredIcon";
+import TransitionEffect from "@/components/TransitionEffect";
 
 const Contact = () => {
   const { currentColor, currentMode } = useStateContext();

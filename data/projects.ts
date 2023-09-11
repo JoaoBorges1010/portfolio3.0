@@ -47,7 +47,6 @@ export const projectsData = [
     image:
       "https://github.com/miguelgon97/DAILY_BITES/blob/master/app/assets/images/db.png?raw=true",
     link: "https://github.com/miguelgon97/DAILY_BITES",
-    demo: "#",
   },
   {
     id: "project-2",
@@ -59,7 +58,7 @@ export const projectsData = [
       "Search for a Location",
       "Various React hooks",
     ],
-    image: "/assets/WeatherApp1.png",
+    image: "/assets/WeatherApp2.png",
     link: "https://github.com/JoaoBorges1010/weather-app/tree/master",
   },
   {
@@ -82,7 +81,7 @@ export const projectsData = [
     id: "project-4",
     title: "Books app",
     description: "a User has books, books have images! CRUD app randomizer",
-    skills: [react, javascript, redux, tailwind, css, html],
+    skills: [react, javascript, typescript, tailwind, css, html],
     details: [
       "DB creation with different tables",
       "User, Books, images automatic creation",
@@ -95,18 +94,20 @@ export const projectsData = [
   },
   {
     id: "project-5",
-    title: "Books app",
-    description: "a User has books, books have images! CRUD app randomizer",
-    skills: [react, javascript, redux, tailwind, css, html],
+    title: "Spotify Clone",
+    description: "Small Spotify Clone",
+    skills: [nextjs, react, javascript, redux, tailwind, css, html],
     details: [
       "DB creation with different tables",
-      "User, Books, images automatic creation",
-      "Using redux toolkit to manage state",
-      "Used Thunks for the user management",
-      "API creation and data fetching",
+      "User authentication",
+      "The user can Upload a mp3 file",
+      "the user can listen to music",
+      "The user can add the songs to their favorites",
+      "API data fetching",
     ],
     image: "/assets/Media3.png",
-    link: "https://github.com/JoaoBorges1010/media",
+    link: "https://github.com/JoaoBorges1010/spotify-cloe",
+    demo: "https://spotify-cloe.vercel.app/",
   },
   {
     id: "project-6",

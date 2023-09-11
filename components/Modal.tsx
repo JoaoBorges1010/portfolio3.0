@@ -112,19 +112,21 @@ const Modal = ({
             </ul>
             {demo ? (
               <div className="flex justify-between  items-center sm:mt-[22px] mt-[16px]">
-                <button
-                  style={{ backgroundColor: currentColor }}
-                  className="flex justify-between sm:text-[16px] text-[14px] text-basic-white font-bold
+                <Link href={demo} target="_blank" className="">
+                  <button
+                    style={{ backgroundColor: currentColor }}
+                    className="flex justify-between sm:text-[16px] text-[14px] text-basic-white font-bold
                           items-center py-5 pl-2 pr-3 whitespace-nowrap gap-1 sm:w-[138px] sm:h-[50px] w-[125px] h-[46px]
                           rounded-[10px]  hover:opacity-70 hover:uppercase hover:scale-110 transition duration-300
                           ease-in shadow-custom"
-                >
-                  <BsPlayCircle
-                    className="sm:w-[34px] sm:h-[34px]
+                  >
+                    <BsPlayCircle
+                      className="sm:w-[34px] sm:h-[34px]
                               w-[30px] h-[30px] animate-ping-slow object-contain"
-                  />
-                  <h1>Live Demo</h1>
-                </button>
+                    />
+                    <h1>Live Demo</h1>
+                  </button>
+                </Link>
                 <div className="">
                   <div
                     className="bg-dark sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center

@@ -1,15 +1,22 @@
 "use client";
 
-import Button from "@/components/Button";
-import Skills from "@/components/Skills";
-import { useStateContext } from "@/contexts/ContextProvider";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaCakeCandles, FaFlag, FaLocationDot } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { SiFuturelearn } from "react-icons/si";
+import { delay, motion } from "framer-motion";
+
+import Button from "@/components/Button";
+import Skills from "@/components/Skills";
+import { useStateContext } from "@/contexts/ContextProvider";
+
+/**
+ * Component for showing the details about the Person.
+ */
 
 const About = () => {
   const { currentMode, currentColor } = useStateContext();
+
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="h-full dark:bg-dark bg-basic-white text-dark-text dark:text-basic-white">
@@ -29,20 +36,25 @@ const About = () => {
           <div className="mx-[-15px] p-4 grid grid-cols-12">
             <div className="col-span-12 lg:col-span-5 px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px] ">
               <img
-                src="/assets/profilePhoto.jpg"
+                src="/assets/profilePhoto.png"
                 alt="Profile Photo"
                 style={{ boxShadow: `0 0 10px ${currentColor}` }}
                 className="w-full h-auto rounded-sm "
               />
             </div>
             <div className="col-span-12 lg:col-span-7">
-              <div className="px-4 pt-10 lg:pt-4 xl:pt-20">
+              <div className="px-4 pt-10 lg:pt-4 xl:pt-10">
                 <p className="text-[17px] leading-[34px] text-left">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Mauris rutrum varius eros, eget consectetur quam dictum
-                  faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit. Mauris rutrum varius eros, eget consectetur quam dictum
-                  faucibus. elit.
+                  I'm João Borges, a budding web developer with a passion for
+                  coding. My journey began with a love for computers and gaming,
+                  especially games with customizable interfaces. I honed my
+                  coding skills at Le Wagon and haven't looked back since. I
+                  thrive on learning and aspire to master the art of coding. My
+                  quick learning abilities, combined with a lifelong love for
+                  technology, make me an adaptable and enthusiastic developer.
+                  My dream is to turn my passion into a profession and create
+                  exceptional digital experiences. Let's connect and embark on
+                  this coding journey together!
                 </p>
               </div>
               <div className="grid grid-cols-12 px-[-15px] pt-4 whitespace-nowrap">
@@ -105,7 +117,7 @@ const About = () => {
                         <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
                           Experience :
                         </span>
-                        rookie
+                        Rookie
                       </p>
                     </li>
                     <li>
@@ -152,8 +164,13 @@ const About = () => {
               full stack web-development
             </h2>
             <p className="text-sm font-normal mt-4 ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              rutrum varius eros, eget consectetur quam dictum faucibus.
+              Le Wagon was a game-changer for me. In just a few weeks, I
+              immersed myself in coding, building web applications from scratch
+              alongside a global community. With expert guidance and a proven
+              curriculum, I not only honed my coding skills but also gained the
+              confidence to pursue my passion as a profession. It's been an
+              incredible journey, fast-tracking my career and opening up
+              countless opportunities.
             </p>
           </div>
         </section>

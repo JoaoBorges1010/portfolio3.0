@@ -53,12 +53,12 @@ const Card = ({
     >
       <div
         className="absolute dark:bg-dark bg-lighter-gray top-0 left-0 z-10 w-full
-      h-full opacity-[0.5] rounded-[24px]"
+      h-full opacity-[0.5] rounded-md"
       ></div>
       <img
         src={image}
         alt={title}
-        className="absolute w-full h-full object-cover rounded-[24px]"
+        className="absolute w-full h-full object-cover rounded-md"
       />
       {active !== id ? (
         <div className="flex items-center justify-start pr-[4.5rem]">

@@ -1,13 +1,13 @@
+"use client";
+
 import "./globals.css";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ContextProvider } from "@/contexts/ContextProvider";
 import ThemeSettings from "@/components/ThemeSettings";
-
-export const metadata = {
-  title: "João's Website",
-  description: "Where you can find interesting things about me",
-};
+import PageWraper from "@/components/PageWraper";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
@@ -18,10 +18,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ContextProvider>
-          <Navbar />
-          <ThemeSettings />
-          {children}
-          <Footer />
+          <PageWraper>
+            <Navbar />
+            <ThemeSettings />
+            {children}
+            <Footer />
+          </PageWraper>
         </ContextProvider>
       </body>
     </html>
