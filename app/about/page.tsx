@@ -9,6 +9,7 @@ import { delay, motion } from "framer-motion";
 import Button from "@/components/Button";
 import Skills from "@/components/Skills";
 import { useStateContext } from "@/contexts/ContextProvider";
+import Link from "next/link";
 
 /**
  * Component for showing the details about the Person.
@@ -134,7 +135,11 @@ const About = () => {
                   </ul>
                 </div>
               </div>
-              <a className="col-span-6" href="#">
+              <a
+                className="col-span-6"
+                href="/assets/JoaoBorgesCV.pdf"
+                download={true}
+              >
                 <Button
                   style={{ backgroundColor: currentColor }}
                   className="rounded-none px-10 py-3 shadow-custom ml-[15px] text-basic-white uppercase font-semibold"
@@ -159,7 +164,9 @@ const About = () => {
                 01-2023
               </p>
             </div>
-            <h1 className="text-lg font-bold ">Le Wagon</h1>
+            <Link href="https://www.lewagon.com/" target="_blank">
+              <h1 className="text-lg font-bold ">Le Wagon</h1>
+            </Link>
             <h2 className="text-base mt-4 font-semibold uppercase ">
               full stack web-development
             </h2>
