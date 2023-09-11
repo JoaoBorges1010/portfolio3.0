@@ -1,13 +1,11 @@
 "use client";
 
 import { Cursor, useTypewriter } from "react-simple-typewriter";
-import { motion } from "framer-motion";
 
 import { useStateContext } from "@/contexts/ContextProvider";
 import Button from "@/components/Button";
 
 import AnimationTest from "../components/AnimationTest";
-import Link from "next/link";
 
 export default function Home() {
   const { currentMode, currentColor } = useStateContext();

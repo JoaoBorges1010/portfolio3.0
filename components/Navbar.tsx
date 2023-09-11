@@ -71,7 +71,7 @@ const Navbar = () => {
               onClick={() => setActiveMenu(false)}
               key={title}
             >
-              <Link
+              <a
                 href={link}
                 className="flex items-center gap-3  relative group hover:scale-105 ease-in-out duration-200"
               >
@@ -84,7 +84,7 @@ const Navbar = () => {
                 >
                   &nbsp;
                 </span>
-              </Link>
+              </a>
             </motion.li>
           ))}
         </motion.ul>
