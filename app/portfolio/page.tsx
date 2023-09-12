@@ -3,9 +3,18 @@
 import ProjectGallery from "@/components/ProjectGallery";
 import TransitionEffect from "@/components/TransitionEffect";
 import { useStateContext } from "@/contexts/ContextProvider";
+import { useEffect } from "react";
 
 const Portfolio = () => {
-  const { currentMode, currentColor } = useStateContext();
+  const { currentColor, setCurrentColor, setCurrentMode, currentMode } =
+    useStateContext();
+
+  useEffect(() => {
+    const renderedColor = localStorage.getItem("colorMode");
+    const renderedTheme = localStorage.getItem("themeMode");
+    setCurrentMode(renderedTheme as string);
+    setCurrentColor(renderedColor as string);
+  }, []);
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>

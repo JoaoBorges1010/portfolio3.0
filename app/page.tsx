@@ -6,15 +6,24 @@ import { useStateContext } from "@/contexts/ContextProvider";
 import Button from "@/components/Button";
 
 import AnimationTest from "../components/AnimationTest";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { currentMode, currentColor } = useStateContext();
+  const { currentColor, setCurrentColor, setCurrentMode, currentMode } =
+    useStateContext();
 
   const [text, count] = useTypewriter({
     words: ["I'm a full stack web-developer", "<I Love to Code />"],
     loop: true,
     delaySpeed: 2000,
   });
+
+  useEffect(() => {
+    const renderedColor = localStorage.getItem("colorMode");
+    const renderedTheme = localStorage.getItem("themeMode");
+    setCurrentMode(renderedTheme as string);
+    setCurrentColor(renderedColor as string);
+  }, []);
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>

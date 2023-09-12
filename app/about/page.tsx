@@ -17,10 +17,13 @@ import { useEffect } from "react";
  */
 
 const About = () => {
-  const { currentMode, currentColor, setCurrentColor } = useStateContext();
+  const { currentMode, setCurrentMode, currentColor, setCurrentColor } =
+    useStateContext();
 
   useEffect(() => {
     const renderedColor = localStorage.getItem("colorMode");
+    const renderedTheme = localStorage.getItem("themeMode");
+    setCurrentMode(renderedTheme as string);
     setCurrentColor(renderedColor as string);
   }, []);
 

@@ -8,9 +8,18 @@ import { useStateContext } from "@/contexts/ContextProvider";
 import ContactForm from "@/components/ContactForm";
 import HoveredIcon from "@/components/HoveredIcon";
 import TransitionEffect from "@/components/TransitionEffect";
+import { useEffect } from "react";
 
 const Contact = () => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor, setCurrentColor, setCurrentMode, currentMode } =
+    useStateContext();
+
+  useEffect(() => {
+    const renderedColor = localStorage.getItem("colorMode");
+    const renderedTheme = localStorage.getItem("themeMode");
+    setCurrentMode(renderedTheme as string);
+    setCurrentColor(renderedColor as string);
+  }, []);
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
