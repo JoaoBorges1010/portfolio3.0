@@ -10,13 +10,19 @@ import Button from "@/components/Button";
 import Skills from "@/components/Skills";
 import { useStateContext } from "@/contexts/ContextProvider";
 import Link from "next/link";
+import { useEffect } from "react";
 
 /**
  * Component for showing the details about the Person.
  */
 
 const About = () => {
-  const { currentMode, currentColor } = useStateContext();
+  const { currentMode, currentColor, setCurrentColor } = useStateContext();
+
+  useEffect(() => {
+    const renderedColor = localStorage.getItem("colorMode");
+    setCurrentColor(renderedColor as string);
+  }, []);
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
