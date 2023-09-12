@@ -52,7 +52,7 @@ const About = () => {
           <div className="mx-[-15px] p-4 grid grid-cols-12">
             <div className="col-span-12 lg:col-span-5 px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px] ">
               <img
-                src="/assets/profilePhoto.png"
+                src="/assets/Borges.jpeg"
                 alt="Profile Photo"
                 style={{ boxShadow: `0 0 10px ${currentColor}` }}
                 className="w-full h-auto rounded-sm "
