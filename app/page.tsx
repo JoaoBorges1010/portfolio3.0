@@ -21,8 +21,14 @@ export default function Home() {
   useEffect(() => {
     const renderedColor = localStorage.getItem("colorMode");
     const renderedTheme = localStorage.getItem("themeMode");
-    setCurrentMode(renderedTheme as string);
-    setCurrentColor(renderedColor as string);
+
+    if (renderedColor && renderedTheme) {
+      setCurrentMode(renderedTheme as string);
+      setCurrentColor(renderedColor as string);
+    } else {
+      setCurrentMode(currentMode);
+      setCurrentColor(currentColor);
+    }
   }, []);
 
   return (
