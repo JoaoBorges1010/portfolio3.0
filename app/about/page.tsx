@@ -126,17 +126,6 @@ const About = () => {
                       </p>
                     </li>
                     <li>
-                      <p className="text-[17px] mb-[12px] font-semibold leading-[34px] flex items-center">
-                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
-                          <SiFuturelearn size={20} />
-                        </span>
-                        <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
-                          Experience :
-                        </span>
-                        Rookie
-                      </p>
-                    </li>
-                    <li>
                       <p className="text-[17px] mb-[12px]  font-semibold leading-[34px] flex items-center">
                         <span className=" pr-[10px] font-normal leading-[1px] dark:text-basic-white text-[#666]">
                           <MdEmail size={20} />
