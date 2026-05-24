@@ -4,7 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ContextProvider } from "@/contexts/ContextProvider";
 import ThemeSettings from "@/components/ThemeSettings";
-import PageWraper from "@/components/PageWraper";
+import PageWrapper from "@/components/PageWrapper";
+import ThemeRoot from "@/components/ThemeRoot";
 
 export default function RootLayout({
   children,
@@ -12,15 +13,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ContextProvider>
-          <PageWraper>
-            <Navbar />
-            <ThemeSettings />
-            {children}
-            <Footer />
-          </PageWraper>
+          <ThemeRoot className="min-h-screen">
+            <PageWrapper>
+              <Navbar />
+              <ThemeSettings />
+              {children}
+              <Footer />
+            </PageWrapper>
+          </ThemeRoot>
         </ContextProvider>
       </body>
     </html>

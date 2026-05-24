@@ -1,104 +1,98 @@
+"use client";
+
 import { useStateContext } from "@/contexts/ContextProvider";
 import Button from "./Button";
-import emailjs from "@emailjs/browser";
+import { useContactForm } from "@/hooks/useContactForm";
+import { cn } from "@/lib/cn";
 
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-const USER_ID = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
+const inputClassName =
+  "border-[1px] dark:border-dark border-lighter-gray focus:outline transition-all dark:bg-light-gray bg-lighter-gray w-full py-3 px-7 mb-[30px]";
 
 const ContactForm = () => {
   const { currentColor } = useStateContext();
-
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const nameInput = e.currentTarget.querySelector(
-      '[name="name"]'
-    ) as HTMLInputElement;
-    const subjectInput = e.currentTarget.querySelector(
-      '[name="subject"]'
-    ) as HTMLInputElement;
-    const emailInput = e.currentTarget.querySelector(
-      '[name="email"]'
-    ) as HTMLInputElement;
-    const messageInput = e.currentTarget.querySelector(
-      '[name="message"]'
-    ) as HTMLTextAreaElement;
-
-    emailjs
-      .send(
-        SERVICE_ID as string,
-        TEMPLATE_ID as string,
-        {
-          name: nameInput.value,
-          subject: subjectInput.value,
-          email: emailInput.value,
-          message: messageInput.value,
-        },
-        USER_ID
-      )
-      .then((response) => {
-        console.log("Email sent successfully", response);
-        const form = document.getElementById("contactForm");
-        if (form) {
-          (form as HTMLFormElement).reset();
-        } else {
-          console.error("Form element not found!");
-        }
-      })
-      .catch((error) => {
-        console.error("Email could not be sent", error);
-      });
-  };
+  const { values, updateField, handleSubmit, isSubmitting, error, success } =
+    useContactForm();
 
   return (
-    <form onSubmit={sendEmail} id="contactForm" className="mt-[10px] md:mt-0">
+    <form onSubmit={handleSubmit} id="contactForm" className="mt-[10px] md:mt-0">
       <div className="grid grid-cols-12 mx-[-15px]">
         <div className="col-span-12 md:col-span-4 px-[15px]">
           <input
             style={{ outlineColor: currentColor }}
-            className="border-[1px] dark:border-dark border-lighter-gray focus:outline transition-all dark:dark:bg-light-gray bg-lighter-gray w-full py-3 px-7 mb-[30px]"
+            className={inputClassName}
             type="text"
             name="name"
             placeholder="YOUR NAME"
+            value={values.name}
+            onChange={(e) => updateField("name", e.target.value)}
+            required
+            disabled={isSubmitting}
           />
         </div>
         <div className="col-span-12 md:col-span-4 px-[15px]">
           <input
             style={{ outlineColor: currentColor }}
-            className="border-[1px] dark:border-dark border-lighter-gray focus:outline transition-all dark:bg-light-gray bg-lighter-gray w-full py-3 px-7 mb-[30px]"
+            className={inputClassName}
             type="text"
             name="subject"
             placeholder="SUBJECT"
+            value={values.subject}
+            onChange={(e) => updateField("subject", e.target.value)}
+            required
+            disabled={isSubmitting}
           />
         </div>
         <div className="col-span-12 md:col-span-4 px-[15px]">
           <input
             style={{ outlineColor: currentColor }}
-            className="border-[1px] dark:border-dark border-lighter-gray focus:outline transition-all dark:bg-light-gray bg-lighter-gray w-full py-3 px-7 mb-[30px]"
-            type="text"
+            className={inputClassName}
+            type="email"
             name="email"
             placeholder="YOUR EMAIL"
+            value={values.email}
+            onChange={(e) => updateField("email", e.target.value)}
+            required
+            disabled={isSubmitting}
           />
         </div>
         <div className="col-span-12 px-[15px]">
           <textarea
             style={{ outlineColor: currentColor }}
-            className="mb-[30px] h-[150px] w-full overflow-hidden focus:outline transition-all border-[1px] dark:border-dark border-lighter-gray
-         dark:bg-light-gray bg-lighter-gray resize-y py-3 px-7"
+            className={cn(
+              inputClassName,
+              "mb-[30px] h-[150px] overflow-hidden resize-y"
+            )}
             name="message"
             placeholder="YOUR MESSAGE"
-          ></textarea>
+            value={values.message}
+            onChange={(e) => updateField("message", e.target.value)}
+            required
+            disabled={isSubmitting}
+          />
         </div>
 
         <div className="col-span-12 px-[15px]">
           <Button
             type="submit"
+            variant="primary"
             style={{ backgroundColor: currentColor }}
-            className="rounded-none px-10 py-3 shadow-custom text-basic-white uppercase font-semibold"
+            disabled={isSubmitting}
           >
-            Send Message
+            {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
+        </div>
+
+        <div className="col-span-12 px-[15px] mt-4" aria-live="polite">
+          {error && (
+            <p className="text-red-500 text-sm" role="alert">
+              {error}
+            </p>
+          )}
+          {success && (
+            <p className="text-green-600 dark:text-green-400 text-sm" role="status">
+              Message sent successfully. Thank you!
+            </p>
+          )}
         </div>
       </div>
     </form>

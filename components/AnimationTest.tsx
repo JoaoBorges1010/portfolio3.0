@@ -3,24 +3,15 @@
 import { useStateContext } from "@/contexts/ContextProvider";
 
 const AnimationTest = () => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
 
   return (
-    <div className={currentMode === "Dark" ? "dark" : ""}>
-      <div className="  block overflow-hidden items-center justify-center">
-        <ul className="circles dark:bg-dark bg-basic-white -z-10">
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-          <li style={{ backgroundColor: currentColor }}></li>
-        </ul>
-      </div>
+    <div className="block overflow-hidden items-center justify-center">
+      <ul className="circles dark:bg-dark bg-basic-white -z-10">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <li key={index} style={{ backgroundColor: currentColor }} />
+        ))}
+      </ul>
     </div>
   );
 };
