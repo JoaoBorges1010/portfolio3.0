@@ -18,8 +18,6 @@ const TransitionEffect = () => {
           width: "0%",
         }}
         exit={{ x: ["75%", "0%", "100%"], width: ["100%"] }}
-        onAnimationStart={() => console.log("Animation started")}
-        onAnimationComplete={() => console.log("animation completed")}
         transition={{
           duration: 0.8,
           ease: "easeInOut",

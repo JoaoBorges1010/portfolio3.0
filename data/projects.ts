@@ -1,38 +1,27 @@
-import {
-  SiBootstrap,
-  SiCss3,
-  SiGithub,
-  SiHtml5,
-  SiJavascript,
-  SiNextdotjs,
-  SiPostgresql,
-  SiReact,
-  SiRedux,
-  SiRuby,
-  SiRubyonrails,
-  SiTailwindcss,
-  SiTypescript,
-} from "react-icons/si";
+export interface Project {
+  id: string;
+  title: string;
+  skills: string[];
+  description: string;
+  details: string[];
+  image: string;
+  link: string;
+  demo?: string;
+}
 
-const react = SiReact;
-const javascript = SiJavascript;
-const html = SiHtml5;
-const rubyOnRails = SiRubyonrails;
-const css = SiCss3;
-const ruby = SiRuby;
-const tailwind = SiTailwindcss;
-const redux = SiRedux;
-const typescript = SiTypescript;
-export const github = SiGithub;
-const bootstrap = SiBootstrap;
-const postgresql = SiPostgresql;
-const nextjs = SiNextdotjs;
-
-export const projectsData = [
+export const projectsData: Project[] = [
   {
     id: "project-1",
     title: "Daily Bites",
-    skills: [ruby, rubyOnRails, css, html, javascript, bootstrap, postgresql],
+    skills: [
+      "ruby",
+      "rubyOnRails",
+      "css",
+      "html",
+      "javascript",
+      "bootstrap",
+      "postgresql",
+    ],
     description: "Le wagon final project",
     details: [
       "Fullstack Meals web-app",
@@ -52,7 +41,7 @@ export const projectsData = [
     id: "project-2",
     title: "Weather App",
     description: "Small weather application using React and tailwind",
-    skills: [react, javascript, html, tailwind],
+    skills: ["react", "javascript", "html", "tailwind"],
     details: [
       "API data fetching and formatting",
       "Search for a Location",
@@ -66,7 +55,16 @@ export const projectsData = [
     title: "Posts app",
     description:
       "Simple CRUD application using React with ruby on rails and typescript",
-    skills: [rubyOnRails, react, ruby, redux, tailwind, css, html, typescript],
+    skills: [
+      "rubyOnRails",
+      "react",
+      "ruby",
+      "redux",
+      "tailwind",
+      "css",
+      "html",
+      "typescript",
+    ],
     details: [
       "Ruby on Rails as the Backend",
       "react as front end",
@@ -81,7 +79,7 @@ export const projectsData = [
     id: "project-4",
     title: "Books app",
     description: "a User has books, books have images! CRUD app randomizer",
-    skills: [react, javascript, typescript, tailwind, css, html],
+    skills: ["react", "javascript", "typescript", "tailwind", "css", "html"],
     details: [
       "DB creation with different tables",
       "User, Books, images automatic creation",
@@ -96,7 +94,7 @@ export const projectsData = [
     id: "project-5",
     title: "Spotify Clone",
     description: "Small Spotify Clone",
-    skills: [nextjs, react, javascript, redux, tailwind, css, html],
+    skills: ["nextjs", "react", "javascript", "redux", "tailwind", "css", "html"],
     details: [
       "DB creation with different tables",
       "User authentication",
@@ -113,7 +111,7 @@ export const projectsData = [
     id: "project-6",
     title: "Car-Hub",
     description: "Small project to search for cars and their details",
-    skills: [nextjs, react, javascript, redux, tailwind, css, html],
+    skills: ["nextjs", "react", "javascript", "redux", "tailwind", "css", "html"],
     details: [
       "Use Next.js 13 App Router and Server side Rendering",
       "Implement Advanced Search Functionality",

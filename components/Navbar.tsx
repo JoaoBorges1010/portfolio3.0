@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { useStateContext } from "@/contexts/ContextProvider";
 import { links } from "@/constants";
@@ -14,14 +14,14 @@ const Navbar = () => {
   const pathName = usePathname();
 
   return (
-    <div className=" fixed top-6 right-6 z-50">
+    <div className="fixed top-6 right-6 z-50">
       <motion.nav
         initial={false}
         animate={activeMenu ? "open" : "closed"}
-        className=" relative p-5 z-50"
+        className="relative p-5 z-50"
       >
         <div
-          className="cursor-pointer  flex items-center justify-center absolute
+          className="cursor-pointer flex items-center justify-center absolute
              p-2 bg-light-gray text-basic-white top-1 right-1 z-10 w-[50px] h-[50px]"
         >
           <MenuButton
@@ -57,9 +57,7 @@ const Navbar = () => {
               },
             },
           }}
-          className="fixed  bottom-auto top-6 right-6
-            bg-light-gray text-basic-white
-             mb-4 pl-6 pt-8 pr-6  pb-8 overflow-hidden z-[2] shadow-custom"
+          className="fixed bottom-auto top-6 right-6 bg-light-gray text-basic-white mb-4 pl-6 pt-8 pr-6 pb-8 overflow-hidden z-[2] shadow-custom"
         >
           {links.map(({ title, link, icon }) => (
             <motion.li
@@ -67,24 +65,23 @@ const Navbar = () => {
                 color: pathName === link ? currentColor : "#fffffc",
                 pointerEvents: pathName === link ? "none" : "auto",
               }}
-              className="cursor-pointer mt-2 mb-4 text-lg  font-semibold uppercase"
+              className="cursor-pointer mt-2 mb-4 text-lg font-semibold uppercase"
               onClick={() => setActiveMenu(false)}
               key={title}
             >
-              <a
+              <Link
                 href={link}
-                className="flex items-center gap-3  relative group hover:scale-105 ease-in-out duration-200"
+                className="flex items-center gap-3 relative group hover:scale-105 ease-in-out duration-200"
               >
                 {icon}
                 {title}
                 <span
                   style={{ backgroundColor: currentColor }}
-                  className="h-[2px] inline-block w-0 absolute left-0 -bottom-0.5
-                  group-hover:w-full transition-[width] ease duration-300"
+                  className="h-[2px] inline-block w-0 absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300"
                 >
                   &nbsp;
                 </span>
-              </a>
+              </Link>
             </motion.li>
           ))}
         </motion.ul>

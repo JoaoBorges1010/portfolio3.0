@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio 3.0
 
-## Getting Started
+Personal portfolio site for João Borges — built with Next.js 13 App Router, React 18, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local
+# Add your EmailJS keys to .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | EmailJS service ID |
+| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID |
+| `NEXT_PUBLIC_EMAILJS_USER_ID` | EmailJS public key |
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` — development server
+- `npm run build` — production build
+- `npm run start` — run production server
+- `npm run lint` — ESLint via Next.js
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `app/` — routes and App Router layouts
+- `components/` — shared UI (navbar, footer, theme)
+- `features/` — feature modules (about, contact, portfolio)
+- `contexts/` — global theme/menu state
+- `lib/` — utilities (email service, `cn`, skill icons)
+- `hooks/` — custom hooks (`useContactForm`)
+- `data/` — static portfolio content
+- `constants/` — theme colors, navigation, skills metadata
