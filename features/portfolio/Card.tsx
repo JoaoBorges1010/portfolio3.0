@@ -2,20 +2,18 @@
 
 import { FaInfoCircle } from "react-icons/fa";
 import { MouseEventHandler } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 
-import { useStateContext } from "@/contexts/ContextProvider";
 import type { Project } from "@/data/projects";
-import { getProjectById } from "@/features/portfolio/utils";
 import Button from "@/components/Button";
-import Modal from "@/features/portfolio/Modal";
+import { IconButton } from "@/components/ui/IconButton";
+import { ProjectImage } from "@/components/ui/ProjectImage";
+import { cn } from "@/lib/cn";
 
 interface CardProps extends Project {
   active: string;
-  selectedId: string;
-  setSelectedId: (value: string) => void;
   handleClick: (value: string) => void;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
@@ -29,22 +27,18 @@ const Card = ({
   link,
   handleClick,
   onClick,
-  selectedId,
-  setSelectedId,
 }: CardProps) => {
-  const { currentColor } = useStateContext();
-  const selectedProject = selectedId ? getProjectById(selectedId) : undefined;
-
   return (
     <div
       onClick={() => handleClick(id)}
-      style={{ boxShadow: `0 0 10px ${currentColor}` }}
-      className={`relative ${
-        active === id ? " md:w-[400px]" : "md:w-[170px] h-[60px] md:h-[420px]"
-      } flex items-center justify-center md:min-w-[170px] w-full h-[420px] cursor-pointer rounded-md transition-all duration-200 ease-in-out`}
+      className={cn(
+        "relative flex items-center justify-center md:min-w-[170px] w-full h-[420px]",
+        "cursor-pointer rounded-md transition-all duration-200 ease-in-out accent-glow overflow-hidden",
+        active === id ? "md:w-[400px]" : "md:w-[170px] h-[60px] md:h-[420px]"
+      )}
     >
       <div className="absolute dark:bg-dark bg-lighter-gray top-0 left-0 z-10 w-full h-full opacity-[0.5] rounded-md" />
-      <img
+      <ProjectImage
         src={image}
         alt={title}
         className="absolute w-full h-full object-cover rounded-md"
@@ -56,48 +50,33 @@ const Card = ({
           </h3>
         </div>
       ) : (
-        <>
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="absolute bottom-0 p-8 justify-start w-full flex-col bg-[rgba(122,122,122,0.5)] rounded-b-md z-20"
-          >
-            <div className="absolute top-2 right-2">
-              <div className="dark:bg-dark bg-lighter-gray sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer sm:opacity-[0.9] opacity-[0.8]">
-                <Link className="w-4/5 h-4/5" href={link} target="_blank">
-                  <SiGithub size={35} />
-                </Link>
-              </div>
-            </div>
-            <h2 className="font-bold sm:text-[32px] text-[24px] uppercase text-basic-white sm:mt-0 -mt-[1rem]">
-              {title}
-            </h2>
-            <p className="text-basic-white capitalize sm:text-[14px] text-[12px] max-w-3xl sm:leading-[24px] leading-[18px] tracking-[1px]">
-              {description}
-            </p>
-            <div className="z-50">
-              <Button
-                type="button"
-                variant="action"
-                onClick={onClick}
-                style={{ backgroundColor: currentColor }}
-              >
-                <FaInfoCircle className="sm:w-[34px] sm:h-[34px] w-[30px] h-[30px] object-contain" />
-                <span>Details</span>
-              </Button>
-            </div>
-          </motion.div>
-          <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-            {selectedProject && (
-              <Modal
-                key={selectedProject.id}
-                project={selectedProject}
-                handleClose={() => setSelectedId("")}
-              />
-            )}
-          </AnimatePresence>
-        </>
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          transition={{ duration: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="absolute bottom-0 p-8 justify-start w-full flex-col bg-[rgba(122,122,122,0.5)] rounded-b-md z-20"
+        >
+          <div className="absolute top-2 right-2">
+            <IconButton
+              href={link}
+              className="dark:bg-dark bg-lighter-gray hover:scale-100"
+            >
+              <SiGithub size={35} />
+            </IconButton>
+          </div>
+          <h2 className="font-bold sm:text-[32px] text-[24px] uppercase text-basic-white sm:mt-0 -mt-[1rem]">
+            {title}
+          </h2>
+          <p className="text-basic-white capitalize sm:text-[14px] text-[12px] max-w-3xl sm:leading-[24px] leading-[18px] tracking-[1px]">
+            {description}
+          </p>
+          <div className="z-50">
+            <Button type="button" variant="action" onClick={onClick}>
+              <FaInfoCircle className="sm:w-[34px] sm:h-[34px] w-[30px] h-[30px] object-contain" />
+              <span>Details</span>
+            </Button>
+          </div>
+        </motion.div>
       )}
     </div>
   );

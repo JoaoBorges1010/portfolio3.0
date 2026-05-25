@@ -1,24 +1,33 @@
 "use client";
 
-import { useStateContext } from "@/contexts/ContextProvider";
 import Button from "./Button";
 import { useContactForm } from "@/hooks/useContactForm";
 import { cn } from "@/lib/cn";
+import { Grid12 } from "@/components/ui/Grid12";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-const inputClassName =
-  "border-[1px] dark:border-dark border-lighter-gray focus:outline transition-all dark:bg-light-gray bg-lighter-gray w-full py-3 px-7 mb-[30px]";
+const inputClassName = cn(
+  "border-[1px] dark:border-dark border-lighter-gray accent-outline focus:outline transition-all",
+  "dark:bg-light-gray bg-lighter-gray w-full py-3 px-7 mb-[30px]"
+);
 
-const ContactForm = () => {
-  const { currentColor } = useStateContext();
+function FormFallback() {
+  return (
+    <p className="text-red-500 text-sm" role="alert">
+      The contact form failed to load. Please refresh the page or email directly.
+    </p>
+  );
+}
+
+function ContactFormFields() {
   const { values, updateField, handleSubmit, isSubmitting, error, success } =
     useContactForm();
 
   return (
     <form onSubmit={handleSubmit} id="contactForm" className="mt-[10px] md:mt-0">
-      <div className="grid grid-cols-12 mx-[-15px]">
+      <Grid12>
         <div className="col-span-12 md:col-span-4 px-[15px]">
           <input
-            style={{ outlineColor: currentColor }}
             className={inputClassName}
             type="text"
             name="name"
@@ -31,7 +40,6 @@ const ContactForm = () => {
         </div>
         <div className="col-span-12 md:col-span-4 px-[15px]">
           <input
-            style={{ outlineColor: currentColor }}
             className={inputClassName}
             type="text"
             name="subject"
@@ -44,7 +52,6 @@ const ContactForm = () => {
         </div>
         <div className="col-span-12 md:col-span-4 px-[15px]">
           <input
-            style={{ outlineColor: currentColor }}
             className={inputClassName}
             type="email"
             name="email"
@@ -57,7 +64,6 @@ const ContactForm = () => {
         </div>
         <div className="col-span-12 px-[15px]">
           <textarea
-            style={{ outlineColor: currentColor }}
             className={cn(
               inputClassName,
               "mb-[30px] h-[150px] overflow-hidden resize-y"
@@ -72,12 +78,7 @@ const ContactForm = () => {
         </div>
 
         <div className="col-span-12 px-[15px]">
-          <Button
-            type="submit"
-            variant="primary"
-            style={{ backgroundColor: currentColor }}
-            disabled={isSubmitting}
-          >
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
         </div>
@@ -94,8 +95,16 @@ const ContactForm = () => {
             </p>
           )}
         </div>
-      </div>
+      </Grid12>
     </form>
+  );
+}
+
+const ContactForm = () => {
+  return (
+    <ErrorBoundary fallback={<FormFallback />}>
+      <ContactFormFields />
+    </ErrorBoundary>
   );
 };
 

@@ -3,9 +3,10 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ContextProvider } from "@/contexts/ContextProvider";
-import ThemeSettings from "@/components/ThemeSettings";
+import ThemeSettingsSafe from "@/components/ThemeSettingsSafe";
 import PageWrapper from "@/components/PageWrapper";
 import ThemeRoot from "@/components/ThemeRoot";
+import ThemeInitScript from "@/components/ThemeInitScript";
 
 export default function RootLayout({
   children,
@@ -14,12 +15,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeInitScript />
+      </head>
       <body>
         <ContextProvider>
           <ThemeRoot className="min-h-screen">
             <PageWrapper>
               <Navbar />
-              <ThemeSettings />
+              <ThemeSettingsSafe />
               {children}
               <Footer />
             </PageWrapper>

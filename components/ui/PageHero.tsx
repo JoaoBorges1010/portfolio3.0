@@ -1,6 +1,5 @@
 "use client";
 
-import { useStateContext } from "@/contexts/ContextProvider";
 import { cn } from "@/lib/cn";
 
 interface PageHeroProps {
@@ -18,8 +17,6 @@ const PageHero = ({
   className,
   titleClassName,
 }: PageHeroProps) => {
-  const { currentColor } = useStateContext();
-
   return (
     <div className={cn(centered ? "text-left md:text-center" : "", className)}>
       <h3
@@ -29,12 +26,7 @@ const PageHero = ({
         )}
       >
         {title}{" "}
-        <span
-          style={{ color: currentColor }}
-          className="tracking-normal capitalize"
-        >
-          {accent}
-        </span>
+        <span className="accent-text tracking-normal capitalize">{accent}</span>
       </h3>
     </div>
   );

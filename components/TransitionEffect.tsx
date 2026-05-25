@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 
-import { useStateContext } from "@/contexts/ContextProvider";
+import { useTheme } from "@/contexts/ContextProvider";
 
 const TransitionEffect = () => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentMode } = useTheme();
 
   return (
     <>
@@ -42,8 +42,7 @@ const TransitionEffect = () => {
         }}
       />
       <motion.div
-        style={{ backgroundColor: currentColor }}
-        className="fixed top-0 bottom-0 right-full w-screen h-screen z-[80]"
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-overlay accent-bg"
         initial={{
           x: "100%",
           width: "100%",

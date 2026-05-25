@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import {
   EmailConfigError,
+  EmailNetworkError,
   sendContactEmail,
   type ContactEmailPayload,
 } from "@/lib/email";
@@ -56,6 +57,8 @@ export function useContactForm() {
       setValues(initialValues);
     } catch (err) {
       if (err instanceof EmailConfigError) {
+        setError(err.message);
+      } else if (err instanceof EmailNetworkError) {
         setError(err.message);
       } else {
         setError("Your message could not be sent. Please try again later.");

@@ -1,25 +1,18 @@
-"use client";
-
 import PageShell from "@/components/ui/PageShell";
 import PageHero from "@/components/ui/PageHero";
+import { AccentText } from "@/components/ui/AccentText";
 import ProjectGallery from "@/features/portfolio/ProjectGallery";
-import { useStateContext } from "@/contexts/ContextProvider";
 
-const Portfolio = () => {
-  const { currentColor } = useStateContext();
-
+export default function PortfolioPage() {
   return (
     <PageShell>
       <PageHero title="My" accent="projects" />
       <div className="p-10 lg:mx-20">
         <p className="text-center text-gray-400">
           Exciting web development projects{" "}
-          <span
-            style={{ color: currentColor }}
-            className="font-bold underline underline-offset-2"
-          >
+          <AccentText className="font-bold underline underline-offset-2">
             both full-stack or front-end
-          </span>{" "}
+          </AccentText>{" "}
           reflecting my passion for creativity and problem-solving. Let&apos;s
           create something amazing together!
         </p>
@@ -27,6 +20,4 @@ const Portfolio = () => {
       <ProjectGallery />
     </PageShell>
   );
-};
-
-export default Portfolio;
+}

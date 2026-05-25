@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
 
@@ -18,7 +16,7 @@ const PageShell = ({
     <div
       className={cn(
         fullHeight
-          ? "h-full dark:bg-dark bg-basic-white text-dark-text dark:text-basic-white"
+          ? "relative min-h-screen dark:bg-dark bg-basic-white text-dark-text dark:text-basic-white"
           : "min-h-screen overflow-hidden dark:bg-dark bg-basic-white text-dark-text pb-[2.9em] dark:text-basic-white",
         className
       )}

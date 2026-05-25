@@ -27,6 +27,9 @@ Open [http://localhost:3000](http://localhost:3000).
 - `npm run build` — production build
 - `npm run start` — run production server
 - `npm run lint` — ESLint via Next.js
+- `npm run test` — unit tests (Vitest)
+- `npm run test:e2e` — smoke tests (Playwright)
+- `npm run format` — format with Prettier
 
 ## Project structure
 
