@@ -34,7 +34,7 @@ export const projectsData: Project[] = [
       "Map to nearby suppermarkets",
     ],
     image:
-      "https://github.com/miguelgon97/DAILY_BITES/blob/master/app/assets/images/db.png?raw=true",
+      "https://raw.githubusercontent.com/miguelgon97/DAILY_BITES/master/app/assets/images/db.png",
     link: "https://github.com/miguelgon97/DAILY_BITES",
   },
   {

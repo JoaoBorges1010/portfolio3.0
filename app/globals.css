@@ -4,6 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .accent-text {
+    color: var(--accent-color);
+  }
+
+  .accent-bg {
+    background-color: var(--accent-color);
+  }
+
+  .accent-border {
+    border-color: var(--accent-color);
+  }
+
+  .accent-outline {
+    outline-color: var(--accent-color);
+  }
+
+  .accent-glow {
+    box-shadow: 0 0 10px var(--accent-color);
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -13,15 +35,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
-
-#tsparticles {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  top: 0;
-  left: 0;
 }
 
 @layer base {

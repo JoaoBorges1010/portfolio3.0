@@ -3,11 +3,10 @@
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-import { useStateContext } from "@/contexts/ContextProvider";
+import { site } from "@/constants/site";
 import HoveredIcon from "./HoveredIcon";
 
 const Footer = () => {
-  const { currentColor } = useStateContext();
   const pathName = usePathname();
 
   if (pathName !== "/") {
@@ -22,15 +21,14 @@ const Footer = () => {
         animate={{ x: 0, opacity: 1, scale: 1 }}
         className="flex mb-2 flex-col"
       >
-        <p className="font-light text-sm mb-2">Lets work together</p>
+        <p className="font-light text-sm mb-2">{site.footer.cta}</p>
         <a
-          style={{ color: currentColor }}
-          href="mailto:joaoborgesbiz@gmail.com"
-          className="font-light text-sm mb-2"
+          href={`mailto:${site.contact.email}`}
+          className="font-light text-sm mb-2 accent-text"
         >
-          joaoborgesbiz@gmail.com
+          {site.contact.email}
         </a>
-        <p className="font-light text-sm">+351 936457957</p>
+        <p className="font-light text-sm">{site.contact.phone}</p>
       </motion.div>
       <motion.div
         initial={{ x: 500, opacity: 0, scale: 0.3 }}
@@ -40,14 +38,14 @@ const Footer = () => {
       >
         <motion.div whileHover={{ y: -2, scale: 2 }} whileTap={{ scale: 0.9 }}>
           <HoveredIcon
-            link="https://github.com/JoaoBorges1010"
+            link={site.social.github}
             className="rounded-full ease-in duration-100"
             bgColor="transparent"
           />
         </motion.div>
         <motion.div whileHover={{ y: -2, scale: 2 }} whileTap={{ scale: 0.9 }}>
           <HoveredIcon
-            link="https://www.linkedin.com/in/joaoborges1010"
+            link={site.social.linkedin}
             className="rounded-full ease-in duration-100"
             bgColor="transparent"
           />

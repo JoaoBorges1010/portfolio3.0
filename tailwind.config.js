@@ -24,6 +24,7 @@ module.exports = {
         "lighter-gray": "#f7f7f7",
         dark: "#292929",
         "dark-text": "#404854",
+        accent: "var(--accent-color)",
       },
       backgroundColor: {
         "half-transparent": "rgba(0, 0, 0, 0.5)",
@@ -33,6 +34,13 @@ module.exports = {
       },
       boxShadow: {
         custom: "0 0 10px rgba(0, 0, 0, 0.35)",
+        "accent-glow": "0 0 10px var(--accent-color)",
+      },
+      zIndex: {
+        nav: "50",
+        dropdown: "80",
+        overlay: "90",
+        modal: "1000",
       },
       animation: {
         "ping-slow": "ping 2s ease-in-out infinite",
@@ -44,5 +52,16 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addComponents, theme }) {
+      addComponents({
+        ".site-container": {
+          maxWidth: "540px",
+          "@screen md": { maxWidth: "720px" },
+          "@screen lg": { maxWidth: "960px" },
+          "@screen xl": { maxWidth: "1140px" },
+        },
+      });
+    },
+  ],
 };

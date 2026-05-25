@@ -1,9 +1,10 @@
 "use client";
 
-import { useStateContext } from "@/contexts/ContextProvider";
 import type { Project } from "@/data/projects";
-import { skillIconMap } from "@/lib/skill-icons";
+import { renderSkillIcons } from "@/lib/skill-icons";
 import Button from "@/components/Button";
+import { IconButton } from "@/components/ui/IconButton";
+import { ProjectImage } from "@/components/ui/ProjectImage";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -32,7 +33,6 @@ const dropIn = {
 };
 
 const Modal = ({ project, handleClose }: ModalProps) => {
-  const { currentColor } = useStateContext();
   const { title, skills, description, details, image, link, demo } = project;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Modal = ({ project, handleClose }: ModalProps) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={handleClose}
-      className="z-[9000] fixed top-0 left-0 w-full h-full flex justify-center items-center bg-neutral-900/90 backdrop-blur-sm"
+      className="z-modal fixed top-0 left-0 w-full h-full flex justify-center items-center bg-dark/90 backdrop-blur-sm"
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
@@ -57,18 +57,16 @@ const Modal = ({ project, handleClose }: ModalProps) => {
         animate="visible"
         exit="exit"
       >
-        <div
-          style={{ boxShadow: `0 0 10px ${currentColor}` }}
-          className="z-[9000] fixed drop-shadow-md border border-neutral-700 top-[50%] left-[50%] h-[90vh] w-[90vw] sm:h-auto md:max-h-[90vh] sm:w-[90vw] sm:max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-800 p-[25px] focus:outline-none overflow-y-auto no-scrollbar"
-        >
-          <img className="w-full h-[30vh]" src={image} alt={title} />
+        <div className="z-modal fixed drop-shadow-md border border-light-gray top-[50%] left-[50%] h-[90vh] w-[90vw] sm:h-auto md:max-h-[90vh] sm:w-[90vw] sm:max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-dark p-[25px] focus:outline-none overflow-y-auto no-scrollbar accent-glow">
+          <ProjectImage
+            src={image}
+            alt={title}
+            width={450}
+            height={300}
+            className="w-full h-[30vh] object-cover"
+          />
           <div className="flex mt-4 mb-6 flex-row gap-3">
-            {skills.map((skill) => {
-              const Icon = skillIconMap[skill];
-              return Icon ? (
-                <Icon key={skill} className="text-gray-400" size={30} />
-              ) : null;
-            })}
+            {renderSkillIcons(skills)}
           </div>
           <div className="flex flex-col">
             <h1 className="text-left font-bold">{title}</h1>
@@ -78,41 +76,27 @@ const Modal = ({ project, handleClose }: ModalProps) => {
             <ul className="ml-8 my-4 capitalize font-extralight text-gray-300">
               {details.map((detail) => (
                 <li key={detail} className="mb-1">
-                  <span style={{ color: currentColor }} className="font-bold">
-                    {"<"}
-                  </span>
+                  <span className="font-bold accent-text">{"<"}</span>
                   {detail}
-                  <span style={{ color: currentColor }} className="font-bold">
-                    {" />"}
-                  </span>
+                  <span className="font-bold accent-text">{" />"}</span>
                 </li>
               ))}
             </ul>
             {demo ? (
               <div className="flex justify-between items-center sm:mt-[22px] mt-[16px]">
                 <Link href={demo} target="_blank">
-                  <Button
-                    variant="action"
-                    style={{ backgroundColor: currentColor }}
-                    className="sm:mt-0 mt-0"
-                  >
+                  <Button variant="action" className="sm:mt-0 mt-0">
                     <BsPlayCircle className="sm:w-[34px] sm:h-[34px] w-[30px] h-[30px] animate-ping-slow object-contain" />
                     <span>Live Demo</span>
                   </Button>
                 </Link>
-                <div className="bg-dark sm:w-11 sm:h-11 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:scale-110 sm:opacity-[0.9] opacity-[0.8] transition duration-300 ease-in shadow-custom">
-                  <Link className="w-4/5 h-4/5" href={link} target="_blank">
-                    <SiGithub size={35} />
-                  </Link>
-                </div>
+                <IconButton href={link}>
+                  <SiGithub size={35} />
+                </IconButton>
               </div>
             ) : (
               <Link href={link} target="_blank">
-                <Button
-                  variant="action"
-                  style={{ backgroundColor: currentColor }}
-                  className="sm:w-[160px] w-[150px]"
-                >
+                <Button variant="action" className="sm:w-[160px] w-[150px]">
                   <SiGithub className="sm:w-[34px] sm:h-[34px] w-[30px] h-[30px] object-contain" />
                   <span>Source code</span>
                 </Button>
@@ -122,7 +106,7 @@ const Modal = ({ project, handleClose }: ModalProps) => {
           <button
             type="button"
             onClick={handleClose}
-            className="text-neutral-400 hover:text-white absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:outline-none"
+            className="text-gray-400 hover:text-basic-white absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:outline-none"
             aria-label="Close modal"
           >
             <IoMdClose />

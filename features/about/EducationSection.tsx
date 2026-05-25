@@ -1,21 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useStateContext } from "@/contexts/ContextProvider";
+
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const EducationSection = () => {
-  const { currentColor } = useStateContext();
-
   return (
     <section className="w-full h-full p-10 flex flex-col justify-center items-center dark:bg-light-gray bg-lighter-gray">
-      <div style={{ borderColor: currentColor }} className="border-b-2">
-        <h1 className="font-header text-4xl font-bold">Education</h1>
-      </div>
+      <SectionHeading title="Education" />
       <div className="my-10 shadow-custom p-10 rounded-sm relative flex flex-col bg-basic-white dark:bg-dark">
-        <div
-          style={{ backgroundColor: currentColor }}
-          className="absolute top-4 right-4 px-2 rounded-sm"
-        >
+        <div className="absolute top-4 right-4 px-2 rounded-sm accent-bg">
           <p className="font-semibold text-normal text-basic-white">01-2023</p>
         </div>
         <Link href="https://www.lewagon.com/" target="_blank">

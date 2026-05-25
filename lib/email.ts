@@ -16,6 +16,15 @@ export class EmailConfigError extends Error {
   }
 }
 
+export class EmailNetworkError extends Error {
+  constructor() {
+    super(
+      "Unable to reach the email service. Check your connection and try again."
+    );
+    this.name = "EmailNetworkError";
+  }
+}
+
 function getEmailConfig() {
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -31,5 +40,12 @@ function getEmailConfig() {
 export async function sendContactEmail(payload: ContactEmailPayload) {
   const { serviceId, templateId, userId } = getEmailConfig();
 
-  return emailjs.send(serviceId, templateId, { ...payload }, userId);
+  try {
+    return await emailjs.send(serviceId, templateId, { ...payload }, userId);
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new EmailNetworkError();
+    }
+    throw error;
+  }
 }

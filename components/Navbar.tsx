@@ -4,25 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
-import { useStateContext } from "@/contexts/ContextProvider";
+import { useUI } from "@/contexts/ContextProvider";
 import { links } from "@/constants";
+import { NavIcon } from "@/components/NavIcon";
+import { cn } from "@/lib/cn";
 import { MenuButton } from "./menuButton";
 
 const Navbar = () => {
-  const { currentColor, activeMenu, setActiveMenu } = useStateContext();
-
+  const { activeMenu, setActiveMenu } = useUI();
   const pathName = usePathname();
 
   return (
-    <div className="fixed top-6 right-6 z-50">
+    <div className="fixed top-6 right-6 z-nav">
       <motion.nav
         initial={false}
         animate={activeMenu ? "open" : "closed"}
-        className="relative p-5 z-50"
+        className="relative p-5 z-nav"
       >
         <div
           className="cursor-pointer flex items-center justify-center absolute
              p-2 bg-light-gray text-basic-white top-1 right-1 z-10 w-[50px] h-[50px]"
+          aria-label={activeMenu ? "Close menu" : "Open menu"}
         >
           <MenuButton
             isOpen={activeMenu}
@@ -61,11 +63,13 @@ const Navbar = () => {
         >
           {links.map(({ title, link, icon }) => (
             <motion.li
+              className={cn(
+                "cursor-pointer mt-2 mb-4 text-lg font-semibold uppercase",
+                pathName === link ? "accent-text" : "text-basic-white"
+              )}
               style={{
-                color: pathName === link ? currentColor : "#fffffc",
                 pointerEvents: pathName === link ? "none" : "auto",
               }}
-              className="cursor-pointer mt-2 mb-4 text-lg font-semibold uppercase"
               onClick={() => setActiveMenu(false)}
               key={title}
             >
@@ -73,12 +77,9 @@ const Navbar = () => {
                 href={link}
                 className="flex items-center gap-3 relative group hover:scale-105 ease-in-out duration-200"
               >
-                {icon}
+                <NavIcon icon={icon} />
                 {title}
-                <span
-                  style={{ backgroundColor: currentColor }}
-                  className="h-[2px] inline-block w-0 absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300"
-                >
+                <span className="h-[2px] inline-block w-0 absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300 accent-bg">
                   &nbsp;
                 </span>
               </Link>
