@@ -26,6 +26,7 @@ interface ThemeContextValue {
   isHydrated: boolean;
   setColor: (color: string) => void;
   setMode: (e: ChangeEvent<HTMLInputElement>) => void;
+  setModeValue: (mode: ThemeMode) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -50,11 +51,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyThemeToDocument(currentMode, currentColor);
   }, [currentMode, currentColor, isHydrated]);
 
-  const setMode = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value as ThemeMode;
-    setCurrentMode(value);
-    persistTheme(value);
+  const setModeValue = useCallback((mode: ThemeMode) => {
+    setCurrentMode(mode);
+    persistTheme(mode);
   }, []);
+
+  const setMode = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setModeValue(e.target.value as ThemeMode);
+    },
+    [setModeValue]
+  );
 
   const setColor = useCallback((color: string) => {
     setCurrentColor(color);
@@ -68,8 +75,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       isHydrated,
       setColor,
       setMode,
+      setModeValue,
     }),
-    [currentColor, currentMode, isHydrated, setColor, setMode]
+    [currentColor, currentMode, isHydrated, setColor, setMode, setModeValue]
   );
 
   return (
