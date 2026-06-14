@@ -32,4 +32,10 @@ export const site = {
 
 export const DEFAULT_COLOR = themeColors[0].color;
 export const DEFAULT_MODE = "Dark" as const;
-export type ThemeMode = "Dark" | "Light";
+export const DEFAULT_THEME_PREFERENCE = "System" as const;
+
+export type ResolvedThemeMode = "Dark" | "Light";
+export type ThemePreference = ResolvedThemeMode | "System";
+
+/** @deprecated Use ThemePreference for storage; ResolvedThemeMode for applied theme */
+export type ThemeMode = ResolvedThemeMode;
