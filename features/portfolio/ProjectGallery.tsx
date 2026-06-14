@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, startTransition } from "react";
 import { AnimatePresence } from "framer-motion";
 
 import Modal from "@/features/portfolio/Modal";
@@ -27,13 +27,25 @@ const ProjectGallery = () => {
   const featuredId = useMemo(() => getFeaturedProjectId(), []);
   const selectedProject = selectedId ? getProjectById(selectedId) : undefined;
 
+  const handleDetails = (id: string) => {
+    startTransition(() => {
+      setSelectedId(id);
+    });
+  };
+
+  const handleClose = () => {
+    startTransition(() => {
+      setSelectedId("");
+    });
+  };
+
   return (
     <ErrorBoundary fallback={<GalleryFallback />}>
       <div className="w-full p-6 md:p-10">
         <ProjectBentoGrid
           projects={projects}
           featuredId={featuredId}
-          onDetails={setSelectedId}
+          onDetails={handleDetails}
         />
       </div>
       <AnimatePresence initial={false} mode="wait">
@@ -41,7 +53,7 @@ const ProjectGallery = () => {
           <Modal
             key={selectedProject.id}
             project={selectedProject}
-            handleClose={() => setSelectedId("")}
+            handleClose={handleClose}
           />
         )}
       </AnimatePresence>
