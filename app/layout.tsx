@@ -21,12 +21,10 @@ export default function RootLayout({
       <body>
         <ContextProvider>
           <ThemeRoot className="min-h-screen">
-            <PageWrapper>
-              <Navbar />
-              <ThemeSettingsSafe />
-              {children}
-              <Footer />
-            </PageWrapper>
+            <Navbar />
+            <ThemeSettingsSafe />
+            <PageWrapper>{children}</PageWrapper>
+            <Footer />
           </ThemeRoot>
         </ContextProvider>
       </body>

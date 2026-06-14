@@ -3,7 +3,6 @@
 import { FaInfoCircle } from "react-icons/fa";
 import { MouseEventHandler } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 
 import type { Project } from "@/data/projects";
