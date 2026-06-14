@@ -7,6 +7,8 @@ export interface Project {
   image: string;
   link: string;
   demo?: string;
+  featured?: boolean;
+  sortOrder?: number;
 }
 
 export const projectsData: Project[] = [
@@ -93,6 +95,8 @@ export const projectsData: Project[] = [
   {
     id: "project-5",
     title: "Spotify Clone",
+    featured: true,
+    sortOrder: 1,
     description: "Small Spotify Clone",
     skills: ["nextjs", "react", "javascript", "redux", "tailwind", "css", "html"],
     details: [

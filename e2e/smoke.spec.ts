@@ -17,6 +17,9 @@ test.describe("Portfolio smoke tests", () => {
     await page.getByLabel("Open menu").click();
     await nav.getByRole("link", { name: "portfolio" }).click();
     await expect(page.getByRole("heading", { name: /My projects/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Spotify Clone" })).toBeVisible();
+    await page.getByRole("button", { name: "Details" }).first().click();
+    await expect(page.getByRole("heading", { level: 1, name: "Spotify Clone" })).toBeVisible();
 
     await page.getByLabel("Open menu").click();
     await nav.getByRole("link", { name: "contact" }).click();

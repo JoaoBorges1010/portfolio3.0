@@ -2,13 +2,15 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { projectsData } from "@/data/projects";
-import Card from "@/features/portfolio/Card";
-import Modal from "@/features/portfolio/Modal";
-import { getProjectById } from "@/features/portfolio/utils";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-const DEFAULT_ACTIVE_PROJECT = "project-5";
+import Modal from "@/features/portfolio/Modal";
+import { ProjectBentoGrid } from "@/features/portfolio/ProjectBentoGrid";
+import {
+  getFeaturedProjectId,
+  getProjectById,
+  getSortedProjects,
+} from "@/features/portfolio/utils";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 function GalleryFallback() {
   return (
@@ -19,26 +21,20 @@ function GalleryFallback() {
 }
 
 const ProjectGallery = () => {
-  const [active, setActive] = useState(DEFAULT_ACTIVE_PROJECT);
   const [selectedId, setSelectedId] = useState("");
 
-  const projects = useMemo(() => [...projectsData].reverse(), []);
+  const projects = useMemo(() => getSortedProjects(), []);
+  const featuredId = useMemo(() => getFeaturedProjectId(), []);
   const selectedProject = selectedId ? getProjectById(selectedId) : undefined;
 
   return (
     <ErrorBoundary fallback={<GalleryFallback />}>
-      <div className="w-full flex justify-center items-center md:overflow-x-auto no-scrollbar p-10">
-        <div className="flex md:flex-row flex-col justify-center items-center md:min-w-max h-full gap-5 mx-auto px-4 md:px-0">
-          {projects.map((project) => (
-            <Card
-              key={project.id}
-              {...project}
-              active={active}
-              handleClick={setActive}
-              onClick={() => setSelectedId(project.id)}
-            />
-          ))}
-        </div>
+      <div className="w-full p-6 md:p-10">
+        <ProjectBentoGrid
+          projects={projects}
+          featuredId={featuredId}
+          onDetails={setSelectedId}
+        />
       </div>
       <AnimatePresence initial={false} mode="wait">
         {selectedProject && (
