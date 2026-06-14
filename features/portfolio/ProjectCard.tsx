@@ -7,7 +7,9 @@ import type { Project } from "@/data/projects";
 import Button from "@/components/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { ProjectImage } from "@/components/ui/ProjectImage";
+import { ProjectTransitionSurface } from "@/features/portfolio/ProjectTransitionSurface";
 import { SkillIcon } from "@/lib/skill-icons";
+import { getProjectViewTransitionName } from "@/lib/view-transition";
 import { cn } from "@/lib/cn";
 
 interface ProjectCardProps {
@@ -33,12 +35,14 @@ export function ProjectCard({
       )}
     >
       <div className="relative h-32 md:h-40 shrink-0 overflow-hidden">
-        <ProjectImage
-          src={image}
-          alt={title}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-dark/40" />
+        <ProjectTransitionSurface name={getProjectViewTransitionName(id)}>
+          <ProjectImage
+            src={image}
+            alt={title}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </ProjectTransitionSurface>
+        <div className="absolute inset-0 bg-dark/40 pointer-events-none" />
         {featured && (
           <span
             className="absolute top-3 left-3 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-basic-white accent-bg"
