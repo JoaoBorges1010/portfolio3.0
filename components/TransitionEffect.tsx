@@ -1,14 +1,29 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 import { useTheme } from "@/contexts/ContextProvider";
 
-const TransitionEffect = () => {
+interface TransitionEffectProps {
+  reducedMotion?: boolean;
+}
+
+const curtainTransition = {
+  duration: 0.8,
+  ease: "easeInOut" as const,
+};
+
+const TransitionEffect = ({ reducedMotion = false }: TransitionEffectProps) => {
   const { currentMode } = useTheme();
+
+  if (reducedMotion) {
+    return null;
+  }
 
   return (
     <>
       <motion.div
-        className="fixed top-0 bottom-0 right-full w-screen h-screen z-[100] bg-dark"
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-[100] bg-dark pointer-events-none"
         initial={{
           x: "100%",
           width: "100%",
@@ -18,13 +33,10 @@ const TransitionEffect = () => {
           width: "0%",
         }}
         exit={{ x: ["75%", "0%", "100%"], width: ["100%"] }}
-        transition={{
-          duration: 0.8,
-          ease: "easeInOut",
-        }}
+        transition={curtainTransition}
       />
       <motion.div
-        className={`fixed top-0 bottom-0 right-full w-screen h-screen z-[90] ${
+        className={`fixed top-0 bottom-0 right-full w-screen h-screen z-[90] pointer-events-none ${
           currentMode === "Light" ? "bg-lighter-gray" : "bg-light-gray"
         }`}
         initial={{
@@ -37,12 +49,11 @@ const TransitionEffect = () => {
         }}
         transition={{
           delay: 0.2,
-          duration: 0.8,
-          ease: "easeInOut",
+          ...curtainTransition,
         }}
       />
       <motion.div
-        className="fixed top-0 bottom-0 right-full w-screen h-screen z-overlay accent-bg"
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-overlay accent-bg pointer-events-none"
         initial={{
           x: "100%",
           width: "100%",
@@ -53,8 +64,7 @@ const TransitionEffect = () => {
         }}
         transition={{
           delay: 0.4,
-          duration: 0.8,
-          ease: "easeInOut",
+          ...curtainTransition,
         }}
       />
     </>
