@@ -1,183 +1,261 @@
 "use client";
 
+import { useCallback, useEffect, useRef } from "react";
 import { FiSettings } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import { MdOutlineClose } from "react-icons/md";
 
 import { useTheme, useUI } from "@/contexts/ContextProvider";
 import { themeColors } from "@/constants";
 import ColorLogo from "@/components/ColorLogo";
-import { MdOutlineCancel } from "react-icons/md";
+import { cn } from "@/lib/cn";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import type { ThemePreference } from "@/constants/site";
 
-const ThemeSettings = () => {
-  const { currentMode, currentColor, setColor, setMode } = useTheme();
-  const { themeSettings, setThemeSettings } = useUI();
+const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
+  { value: "Light", label: "Light" },
+  { value: "Dark", label: "Dark" },
+  { value: "System", label: "System" },
+];
 
-  const radioColorDark = currentMode === "Dark" ? "#292929" : "";
-  const radioColorWhite = currentMode === "Light" ? "#fffffc" : "";
+function ThemePreview({
+  accentColor,
+  resolvedMode,
+}: {
+  accentColor: string;
+  resolvedMode: string;
+}) {
+  const isDark = resolvedMode === "Dark";
 
   return (
-    <AnimatePresence>
-      <div className="fixed right-6 bottom-[10%] z-40">
-        {!themeSettings && (
-          <button
-            type="button"
-            onClick={() => setThemeSettings(!themeSettings)}
-            style={{
-              background: currentColor,
-              borderRadius: "50%",
-              animation: "spin 5s linear infinite",
-            }}
-            className="text-3xl text-basic-white p-3 hover:drop-shadow-xl hover:bg-basic-white"
-          >
-            <FiSettings />
-          </button>
+    <div
+      className={cn(
+        "rounded-md border p-3 space-y-2",
+        isDark ? "bg-dark border-light-gray/30" : "bg-lighter-gray border-light-gray/40"
+      )}
+    >
+      <div
+        className={cn(
+          "flex items-center justify-between rounded px-2 py-1 text-xs",
+          isDark ? "bg-light-gray/20 text-basic-white" : "bg-basic-white text-dark"
         )}
+      >
+        <span>nav</span>
+        <span
+          className="rounded px-2 py-0.5 text-[10px] font-semibold text-basic-white"
+          style={{ backgroundColor: accentColor }}
+        >
+          accent
+        </span>
+      </div>
+      <div
+        className={cn(
+          "h-2 rounded-full w-3/4",
+          isDark ? "bg-light-gray/30" : "bg-light-gray/50"
+        )}
+      />
+      <div
+        className="h-6 w-20 rounded text-[10px] font-semibold text-basic-white flex items-center justify-center"
+        style={{ backgroundColor: accentColor }}
+      >
+        button
+      </div>
+    </div>
+  );
+}
 
+const ThemeSettings = () => {
+  const {
+    currentMode,
+    themePreference,
+    currentColor,
+    setColor,
+    setThemePreference,
+  } = useTheme();
+  const { themeSettings, setThemeSettings } = useUI();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  const closePanel = useCallback(() => {
+    setThemeSettings(false);
+    triggerRef.current?.focus();
+  }, [setThemeSettings]);
+
+  useEffect(() => {
+    if (!themeSettings) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closePanel();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [themeSettings, closePanel]);
+
+  useEffect(() => {
+    if (!themeSettings || !panelRef.current) {
+      return;
+    }
+
+    const panel = panelRef.current;
+    const focusable = panel.querySelectorAll<HTMLElement>(
+      "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    first?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || focusable.length === 0) {
+        return;
+      }
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    panel.addEventListener("keydown", onKeyDown);
+    return () => panel.removeEventListener("keydown", onKeyDown);
+  }, [themeSettings]);
+
+  const panelMotion = prefersReducedMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
+    : {
+        initial: { y: 24, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        exit: { y: 16, opacity: 0 },
+      };
+
+  return (
+    <div className="fixed right-6 bottom-[10%] z-40">
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setThemeSettings(!themeSettings)}
+        aria-expanded={themeSettings}
+        aria-haspopup="dialog"
+        aria-label="Appearance settings"
+        className="text-2xl text-basic-white p-3 rounded-full shadow-custom transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 accent-outline"
+        style={{ backgroundColor: currentColor }}
+      >
+        <FiSettings />
+      </button>
+
+      <AnimatePresence>
         {themeSettings && (
-          <div className="bg-half-transparent z-40 w-screen h-screen fixed top-0 right-0">
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close appearance settings"
+              className="fixed inset-0 z-40 bg-half-transparent cursor-default"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closePanel}
+            />
             <motion.div
-              initial={{ x: 500 }}
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: "easeOut",
-                },
-              }}
-              className="float-right dark:bg-basic-white mt-20  bg-light-gray shadow-custom"
+              ref={panelRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Appearance settings"
+              className={cn(
+                "fixed z-50 w-[min(100vw-2rem,20rem)] rounded-lg shadow-custom border accent-border",
+                "dark:bg-basic-white bg-light-gray",
+                "right-6 bottom-[calc(10%+4.5rem)] md:right-6 md:bottom-[calc(10%+4.5rem)]",
+                "max-md:left-4 max-md:right-4 max-md:bottom-4 max-md:w-auto"
+              )}
+              {...panelMotion}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <button
-                type="button"
-                onClick={() => setThemeSettings(false)}
-                style={{ color: "rgb(153, 171, 180)", borderRadius: "50%" }}
-                className="text-2xl p-3 hover:drop-shadow-xl hover:bg-light-gray"
-              >
-                <MdOutlineCancel />
-              </button>
-              <div className="flex-col z-[1000]  p-4">
-                <div
-                  style={{ borderColor: currentColor }}
-                  className="p-4 border-t-4 rounded-lg ml-4 mt-2"
+              <div className="flex items-center justify-between p-4 border-b border-light-gray/30">
+                <h2 className="font-header text-lg dark:text-light-gray text-basic-white">
+                  Appearance
+                </h2>
+                <button
+                  type="button"
+                  onClick={closePanel}
+                  aria-label="Close"
+                  className="p-2 rounded-full text-light-gray hover:bg-light-gray/20 transition-colors"
                 >
-                  <p className="font-semibold text-xl dark:text-light-gray text-basic-white ">
-                    Theme Option
+                  <MdOutlineClose size={22} />
+                </button>
+              </div>
+
+              <div className="p-4 space-y-5">
+                <ThemePreview
+                  accentColor={currentColor}
+                  resolvedMode={currentMode}
+                />
+
+                <div>
+                  <p className="font-semibold text-sm dark:text-light-gray text-basic-white mb-3">
+                    Theme
                   </p>
-                  <div className="mt-4 flex items-center">
-                    <input
-                      type="radio"
-                      id="light"
-                      name="theme"
-                      value="Light"
-                      className="cursor-pointer invisible"
-                      onChange={setMode}
-                      checked={currentMode === "Light"}
-                    />
-                    <span
-                      style={
-                        currentMode === "Light"
-                          ? {
-                              backgroundColor: currentColor,
-                              borderColor: currentColor,
-                            }
-                          : {
-                              backgroundColor: radioColorWhite,
-                              borderColor: currentColor,
-                            }
-                      }
-                      className="cursor-pointer w-[17px] h-[17px] border-2 border-solid  rounded-full inline-block relative"
-                    />
-                    <label
-                      htmlFor="light"
-                      className="ml-2 text-md cursor-pointer dark:text-light-gray text-basic-white"
-                    >
-                      Light
-                    </label>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <input
-                      type="radio"
-                      id="dark"
-                      name="theme"
-                      value="Dark"
-                      onChange={setMode}
-                      className="cursor-pointer invisible"
-                      checked={currentMode === "Dark"}
-                    />
-                    <span
-                      style={
-                        currentMode === "Dark"
-                          ? {
-                              backgroundColor: currentColor,
-                              borderColor: currentColor,
-                            }
-                          : {
-                              backgroundColor: radioColorDark,
-                              borderColor: currentColor,
-                            }
-                      }
-                      className="cursor-pointer w-[17px] h-[17px] border-2 border-solid  rounded-full inline-block relative"
-                    />
-                    <label
-                      htmlFor="dark"
-                      className="ml-2 text-md cursor-pointer dark:text-light-gray text-basic-white"
-                    >
-                      Dark
-                    </label>
+                  <div className="flex flex-wrap gap-2">
+                    {THEME_OPTIONS.map(({ value, label }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setThemePreference(value)}
+                        className={cn(
+                          "px-3 py-1.5 rounded-full text-sm border-2 transition-colors",
+                          themePreference === value
+                            ? "text-basic-white accent-bg accent-border"
+                            : "dark:text-light-gray text-basic-white border-light-gray/40 hover:border-current"
+                        )}
+                        aria-pressed={themePreference === value}
+                      >
+                        {label}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <div
-                  style={{ borderColor: currentColor }}
-                  className="p-4 border-t-4 rounded-lg ml-4 mt-2"
-                >
-                  <p className="font-semibold text-xl dark:text-light-gray text-basic-white">
-                    Theme Colors
+
+                <div>
+                  <p className="font-semibold text-sm dark:text-light-gray text-basic-white mb-3">
+                    Accent color
                   </p>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-4 gap-2">
                     {themeColors.map(({ color, name }) => (
-                      <div
-                        className="relative mt-2 cursor-pointer flex gap-5 items-center"
+                      <button
                         key={name}
+                        type="button"
+                        aria-label={`Accent color ${name}`}
+                        aria-pressed={currentColor === color}
+                        onClick={() => setColor(color)}
+                        className={cn(
+                          "h-10 w-10 rounded-full flex justify-center items-center border-2 transition-all",
+                          currentColor === color
+                            ? "scale-110 accent-border"
+                            : "border-transparent hover:scale-105"
+                        )}
                       >
-                        <button
-                          type="button"
-                          style={
-                            currentColor === color
-                              ? {
-                                  borderColor: color,
-                                  width: "50px",
-                                  height: "50px",
-                                }
-                              : { borderColor: "black" }
-                          }
-                          className="h-10 w-10 rounded-full flex justify-center border-2
-                        items-center cursor-pointer"
-                          onClick={() => setColor(color)}
-                        >
-                          <ColorLogo
-                            style={
-                              currentColor === color
-                                ? { animation: "spin 5s linear infinite" }
-                                : {}
-                            }
-                            className="hover:animate-spin transition-all ease-in-out duration-300"
-                            fill={
-                              currentColor === color ? color : "transparent"
-                            }
-                            stroke={currentColor === color ? "black" : color}
-                            width={currentColor === color ? 40 : 30}
-                            height={currentColor === color ? 40 : 30}
-                          />
-                        </button>
-                      </div>
+                        <ColorLogo
+                          fill={currentColor === color ? color : "transparent"}
+                          stroke={currentColor === color ? "black" : color}
+                          width={currentColor === color ? 32 : 24}
+                          height={currentColor === color ? 32 : 24}
+                        />
+                      </button>
                     ))}
                   </div>
                 </div>
               </div>
             </motion.div>
-          </div>
+          </>
         )}
-      </div>
-    </AnimatePresence>
+      </AnimatePresence>
+    </div>
   );
 };
 
