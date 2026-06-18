@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { FiSettings } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdOutlineClose } from "react-icons/md";
 
@@ -75,11 +74,9 @@ const ThemeSettings = () => {
   const { themeSettings, setThemeSettings } = useUI();
   const prefersReducedMotion = usePrefersReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const closePanel = useCallback(() => {
     setThemeSettings(false);
-    triggerRef.current?.focus();
   }, [setThemeSettings]);
 
   useEffect(() => {
@@ -137,55 +134,41 @@ const ThemeSettings = () => {
       };
 
   return (
-    <div className="fixed right-6 bottom-[10%] z-40">
-      <button
-        ref={triggerRef}
-        type="button"
-        onClick={() => setThemeSettings(!themeSettings)}
-        aria-expanded={themeSettings}
-        aria-haspopup="dialog"
-        aria-label="Appearance settings"
-        className="text-2xl text-basic-white p-3 rounded-full shadow-custom transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 accent-outline"
-        style={{ backgroundColor: currentColor }}
-      >
-        <FiSettings />
-      </button>
-
-      <AnimatePresence>
-        {themeSettings && (
-          <>
-            <motion.button
-              type="button"
-              aria-label="Close appearance settings"
-              className="fixed inset-0 z-40 bg-half-transparent cursor-default"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closePanel}
-            />
+    <AnimatePresence>
+      {themeSettings && (
+        <>
+          <motion.button
+            type="button"
+            aria-label="Close appearance settings"
+            className="fixed inset-0 z-overlay bg-half-transparent cursor-default"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closePanel}
+          />
+          <div className="fixed inset-0 z-modal flex items-center justify-center p-4 pointer-events-none">
             <motion.div
               ref={panelRef}
+              id="appearance-panel"
               role="dialog"
               aria-modal="true"
-              aria-label="Appearance settings"
+              aria-labelledby="appearance-title"
               className={cn(
-                "fixed z-50 w-[min(100vw-2rem,20rem)] rounded-lg shadow-custom border accent-border",
-                "dark:bg-basic-white bg-light-gray",
-                "right-6 bottom-[calc(10%+4.5rem)] md:right-6 md:bottom-[calc(10%+4.5rem)]",
-                "max-md:left-4 max-md:right-4 max-md:bottom-4 max-md:w-auto"
+                "pointer-events-auto w-[min(100vw-2rem,20rem)] rounded-lg shadow-custom border accent-border",
+                "bg-basic-white text-dark-text"
               )}
               {...panelMotion}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="flex items-center justify-between p-4 border-b border-light-gray/30">
-                <h2 className="font-header text-lg dark:text-light-gray text-basic-white">
+                <h2 id="appearance-title" className="font-header text-lg text-dark-text">
                   Appearance
                 </h2>
                 <button
                   type="button"
                   onClick={closePanel}
                   aria-label="Close"
-                  className="p-2 rounded-full text-light-gray hover:bg-light-gray/20 transition-colors"
+                  className="p-2 rounded-full text-dark-text/60 hover:bg-lighter-gray transition-colors"
                 >
                   <MdOutlineClose size={22} />
                 </button>
@@ -198,9 +181,7 @@ const ThemeSettings = () => {
                 />
 
                 <div>
-                  <p className="font-semibold text-sm dark:text-light-gray text-basic-white mb-3">
-                    Theme
-                  </p>
+                  <p className="font-semibold text-sm text-dark-text mb-3">Theme</p>
                   <div className="flex flex-wrap gap-2">
                     {THEME_OPTIONS.map(({ value, label }) => (
                       <button
@@ -210,8 +191,8 @@ const ThemeSettings = () => {
                         className={cn(
                           "px-3 py-1.5 rounded-full text-sm border-2 transition-colors",
                           themePreference === value
-                            ? "text-basic-white accent-bg accent-border"
-                            : "dark:text-light-gray text-basic-white border-light-gray/40 hover:border-current"
+                            ? "accent-border bg-basic-white text-dark-text font-semibold"
+                            : "border-light-gray/40 text-dark-text hover:border-dark-text/30"
                         )}
                         aria-pressed={themePreference === value}
                       >
@@ -222,7 +203,7 @@ const ThemeSettings = () => {
                 </div>
 
                 <div>
-                  <p className="font-semibold text-sm dark:text-light-gray text-basic-white mb-3">
+                  <p className="font-semibold text-sm text-dark-text mb-3">
                     Accent color
                   </p>
                   <div className="grid grid-cols-4 gap-2">
@@ -252,10 +233,10 @@ const ThemeSettings = () => {
                 </div>
               </div>
             </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 

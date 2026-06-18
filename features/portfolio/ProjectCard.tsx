@@ -29,12 +29,17 @@ export function ProjectCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-md border border-light-gray/20 bg-dark/40 transition-all duration-200",
-        "hover:border-[var(--accent-color)] hover:shadow-[0_0_12px_var(--accent-color)]",
-        featured ? "min-h-[280px] md:min-h-[360px]" : "min-h-[200px]"
+        "group relative flex h-full flex-col overflow-hidden rounded-md border transition-all duration-200",
+        "bg-dark border-white/20 dark:border-light-gray/45 dark:bg-dark/40",
+        "hover:border-[var(--accent-color)] hover:shadow-[0_0_12px_var(--accent-color)]"
       )}
     >
-      <div className="relative h-32 md:h-40 shrink-0 overflow-hidden">
+      <div
+        className={cn(
+          "relative shrink-0 overflow-hidden",
+          featured ? "h-48 md:h-auto md:min-h-[12rem] md:flex-1" : "h-32 md:h-40"
+        )}
+      >
         <ProjectTransitionSurface name={getProjectViewTransitionName(id)}>
           <ProjectImage
             src={image}
@@ -64,10 +69,10 @@ export function ProjectCard({
           </h3>
           <IconButton
             href={link}
-            className="shrink-0 dark:bg-dark bg-lighter-gray hover:scale-100"
+            className="shrink-0 bg-dark hover:scale-100"
             aria-label={`${title} on GitHub`}
           >
-            <SiGithub size={22} />
+            <SiGithub className="w-7 h-7 text-basic-white" />
           </IconButton>
         </div>
 

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { FiSettings } from "react-icons/fi";
 
 import { useUI } from "@/contexts/ContextProvider";
 import { links } from "@/constants";
@@ -11,7 +12,7 @@ import { cn } from "@/lib/cn";
 import { MenuButton } from "./menuButton";
 
 const Navbar = () => {
-  const { activeMenu, setActiveMenu } = useUI();
+  const { activeMenu, setActiveMenu, setThemeSettings } = useUI();
   const pathName = usePathname();
 
   return (
@@ -85,6 +86,23 @@ const Navbar = () => {
               </Link>
             </motion.li>
           ))}
+          <motion.li className="cursor-pointer mt-2 mb-4 text-lg font-semibold uppercase text-basic-white">
+            <button
+              type="button"
+              aria-controls="appearance-panel"
+              onClick={() => {
+                setActiveMenu(false);
+                setThemeSettings(true);
+              }}
+              className="w-full text-left flex items-center gap-3 relative group hover:scale-105 ease-in-out duration-200 text-lg font-semibold uppercase"
+            >
+              <FiSettings aria-hidden className="shrink-0" />
+              appearance
+              <span className="h-[2px] inline-block w-0 absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300 accent-bg">
+                &nbsp;
+              </span>
+            </button>
+          </motion.li>
         </motion.ul>
       </motion.nav>
     </div>
