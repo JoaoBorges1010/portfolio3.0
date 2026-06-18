@@ -12,18 +12,18 @@ import AboutMetaRow from "@/features/about/AboutMetaRow";
 const AboutIntro = () => {
   return (
     <section className="max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] px-4 mb-[100px] mx-auto">
-      <Grid12 className="p-4">
-        <div className="col-span-12 lg:col-span-5 px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px]">
+      <Grid12 className="p-4 lg:items-stretch">
+        <div className="col-span-12 lg:col-span-5 px-4 mx-auto lg:mx-0 md:max-w-[450px] lg:max-w-[370px] xl:max-w-[450px] lg:flex lg:self-stretch">
           <ProjectImage
             src={site.about.profileImage}
             alt="Profile Photo"
             width={450}
             height={600}
-            className="w-full h-auto rounded-sm accent-glow"
+            className="w-full h-auto lg:h-full lg:object-cover lg:object-top rounded-sm accent-glow"
           />
         </div>
-        <div className="col-span-12 lg:col-span-7">
-          <div className="px-4 pt-10 lg:pt-4 xl:pt-10">
+        <div className="col-span-12 lg:col-span-7 flex flex-col lg:self-stretch">
+          <div className="px-4 pt-10 lg:pt-0">
             <p className="text-[17px] leading-[34px] text-left">{site.about.bio}</p>
           </div>
           <div className="grid grid-cols-12 pt-4">
@@ -61,11 +61,11 @@ const AboutIntro = () => {
               </ul>
             </div>
           </div>
-          <a className="col-span-6" href={site.about.resumePath} download>
-            <Button variant="primary" className="ml-[15px]">
-              Download resume
-            </Button>
-          </a>
+          <div className="px-4 mt-auto pt-4">
+            <a className="block" href={site.about.resumePath} download>
+              <Button variant="primary">Download resume</Button>
+            </a>
+          </div>
         </div>
       </Grid12>
     </section>
