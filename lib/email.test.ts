@@ -2,16 +2,32 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import {
   EmailConfigError,
   EmailNetworkError,
+  EmailSendError,
   sendContactEmail,
 } from "@/lib/email";
 
-vi.mock("@emailjs/browser", () => ({
-  default: {
-    send: vi.fn(),
-  },
-}));
+vi.mock("@emailjs/browser", () => {
+  class EmailJSResponseStatus extends Error {
+    status: number;
+    text: string;
 
-import emailjs from "@emailjs/browser";
+    constructor(status: number, text: string) {
+      super(text);
+      this.status = status;
+      this.text = text;
+      this.name = "EmailJSResponseStatus";
+    }
+  }
+
+  return {
+    EmailJSResponseStatus,
+    default: {
+      send: vi.fn(),
+    },
+  };
+});
+
+import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
 
 describe("sendContactEmail", () => {
   beforeEach(() => {
@@ -54,9 +70,35 @@ describe("sendContactEmail", () => {
         subject: "Hi",
         email: "test@example.com",
         message: "Hello",
+        to_name: "João Borges",
       },
       "user"
     );
+  });
+
+  it("throws EmailSendError on EmailJS API failure", async () => {
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID = "service";
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = "template";
+    process.env.NEXT_PUBLIC_EMAILJS_USER_ID = "user";
+
+    vi.mocked(emailjs.send).mockRejectedValue(
+      new EmailJSResponseStatus(
+        412,
+        "Gmail_API: Invalid grant. Please reconnect your Gmail account"
+      )
+    );
+
+    await expect(
+      sendContactEmail({
+        name: "Test",
+        subject: "Hi",
+        email: "test@example.com",
+        message: "Hello",
+      })
+    ).rejects.toMatchObject({
+      name: "EmailSendError",
+      message: expect.stringContaining("Reconnect Gmail"),
+    });
   });
 
   it("throws EmailNetworkError on TypeError", async () => {
