@@ -8,7 +8,7 @@ export default function PortfolioPage() {
     <PageShell>
       <PageHero title="My" accent="projects" />
       <div className="p-10 lg:mx-20">
-        <p className="text-center text-gray-400">
+        <p className="text-center text-dark-text/60 dark:text-gray-400">
           Exciting web development projects{" "}
           <AccentText className="font-bold underline underline-offset-2">
             both full-stack or front-end

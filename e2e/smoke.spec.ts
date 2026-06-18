@@ -31,4 +31,12 @@ test.describe("Portfolio smoke tests", () => {
     await page.getByRole("button", { name: "Send Message" }).click();
     await expect(page.getByRole("alert")).toBeVisible();
   });
+
+  test("opens appearance settings from nav menu", async ({ page }) => {
+    await page.goto("/");
+    await page.getByLabel("Open menu").click();
+    await page.getByRole("button", { name: "appearance" }).click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Appearance" })).toBeVisible();
+  });
 });

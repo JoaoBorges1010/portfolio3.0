@@ -16,9 +16,7 @@ export function ProjectBentoGrid({
   onDetails,
 }: ProjectBentoGridProps) {
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-4 auto-rows-[minmax(200px,auto)] gap-4 md:gap-5 w-full max-w-6xl mx-auto"
-    >
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 w-full max-w-6xl mx-auto items-stretch">
       {projects.map((project) => {
         const isFeatured = project.id === featuredId;
 
@@ -26,6 +24,7 @@ export function ProjectBentoGrid({
           <div
             key={project.id}
             className={cn(
+              "min-h-0",
               isFeatured && "md:col-span-2 md:row-span-2"
             )}
           >

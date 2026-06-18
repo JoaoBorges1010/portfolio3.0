@@ -25,7 +25,11 @@ export function IconButton({
         className
       )}
     >
-      <Link className="w-4/5 h-4/5" href={href} target="_blank">
+      <Link
+        className="flex items-center justify-center w-full h-full"
+        href={href}
+        target="_blank"
+      >
         {children}
       </Link>
     </div>
