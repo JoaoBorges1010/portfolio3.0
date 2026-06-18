@@ -1,4 +1,5 @@
 import emailjs from "@emailjs/browser";
+import { site } from "@/constants/site";
 
 export interface ContactEmailPayload {
   name: string;
@@ -14,6 +15,21 @@ export class EmailConfigError extends Error {
     );
     this.name = "EmailConfigError";
   }
+}
+
+export class EmailSendError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "EmailSendError";
+  }
+}
+
+function getEmailSendErrorMessage(text: string): string {
+  if (/invalid grant|reconnect your gmail/i.test(text)) {
+    return "The Gmail connection in EmailJS has expired. Reconnect Gmail under Email Services in the EmailJS dashboard, then try again.";
+  }
+
+  return "Your message could not be sent. Please try again later.";
 }
 
 export class EmailNetworkError extends Error {
@@ -37,14 +53,41 @@ function getEmailConfig() {
   return { serviceId, templateId, userId };
 }
 
+function buildTemplateParams(payload: ContactEmailPayload) {
+  return {
+    ...payload,
+    to_name: site.name,
+  };
+}
+
+function isEmailJSApiError(
+  error: unknown
+): error is { status: number; text: string } {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    "text" in error &&
+    typeof (error as { text: unknown }).text === "string"
+  );
+}
+
 export async function sendContactEmail(payload: ContactEmailPayload) {
   const { serviceId, templateId, userId } = getEmailConfig();
 
   try {
-    return await emailjs.send(serviceId, templateId, { ...payload }, userId);
+    return await emailjs.send(
+      serviceId,
+      templateId,
+      buildTemplateParams(payload),
+      userId
+    );
   } catch (error) {
     if (error instanceof TypeError) {
       throw new EmailNetworkError();
+    }
+    if (isEmailJSApiError(error)) {
+      throw new EmailSendError(getEmailSendErrorMessage(error.text));
     }
     throw error;
   }
