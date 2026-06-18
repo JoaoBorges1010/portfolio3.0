@@ -6,28 +6,13 @@ import {
   sendContactEmail,
 } from "@/lib/email";
 
-vi.mock("@emailjs/browser", () => {
-  class EmailJSResponseStatus extends Error {
-    status: number;
-    text: string;
+vi.mock("@emailjs/browser", () => ({
+  default: {
+    send: vi.fn(),
+  },
+}));
 
-    constructor(status: number, text: string) {
-      super(text);
-      this.status = status;
-      this.text = text;
-      this.name = "EmailJSResponseStatus";
-    }
-  }
-
-  return {
-    EmailJSResponseStatus,
-    default: {
-      send: vi.fn(),
-    },
-  };
-});
-
-import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 
 describe("sendContactEmail", () => {
   beforeEach(() => {
@@ -81,12 +66,10 @@ describe("sendContactEmail", () => {
     process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = "template";
     process.env.NEXT_PUBLIC_EMAILJS_USER_ID = "user";
 
-    vi.mocked(emailjs.send).mockRejectedValue(
-      new EmailJSResponseStatus(
-        412,
-        "Gmail_API: Invalid grant. Please reconnect your Gmail account"
-      )
-    );
+    vi.mocked(emailjs.send).mockRejectedValue({
+      status: 412,
+      text: "Gmail_API: Invalid grant. Please reconnect your Gmail account",
+    });
 
     await expect(
       sendContactEmail({

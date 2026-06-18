@@ -1,4 +1,4 @@
-import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import { site } from "@/constants/site";
 
 export interface ContactEmailPayload {
@@ -60,6 +60,18 @@ function buildTemplateParams(payload: ContactEmailPayload) {
   };
 }
 
+function isEmailJSApiError(
+  error: unknown
+): error is { status: number; text: string } {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    "text" in error &&
+    typeof (error as { text: unknown }).text === "string"
+  );
+}
+
 export async function sendContactEmail(payload: ContactEmailPayload) {
   const { serviceId, templateId, userId } = getEmailConfig();
 
@@ -74,7 +86,7 @@ export async function sendContactEmail(payload: ContactEmailPayload) {
     if (error instanceof TypeError) {
       throw new EmailNetworkError();
     }
-    if (error instanceof EmailJSResponseStatus) {
+    if (isEmailJSApiError(error)) {
       throw new EmailSendError(getEmailSendErrorMessage(error.text));
     }
     throw error;
