@@ -11,35 +11,47 @@ import {
   type ReactNode,
 } from "react";
 
-import { DEFAULT_COLOR, DEFAULT_MODE, type ThemeMode } from "@/constants/site";
+import {
+  DEFAULT_COLOR,
+  type ResolvedThemeMode,
+  type ThemePreference,
+} from "@/constants/site";
 import {
   applyThemeToDocument,
+  getSystemTheme,
   persistColor,
-  persistTheme,
+  persistThemePreference,
   readStoredColor,
-  readStoredTheme,
+  readStoredThemePreference,
+  resolveThemeMode,
 } from "@/lib/theme-storage";
 
 interface ThemeContextValue {
   currentColor: string;
-  currentMode: ThemeMode;
+  /** Resolved light/dark applied to the document */
+  currentMode: ResolvedThemeMode;
+  themePreference: ThemePreference;
   isHydrated: boolean;
   setColor: (color: string) => void;
   setMode: (e: ChangeEvent<HTMLInputElement>) => void;
-  setModeValue: (mode: ThemeMode) => void;
+  setModeValue: (preference: ThemePreference) => void;
+  setThemePreference: (preference: ThemePreference) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [themePreference, setThemePreferenceState] =
+    useState<ThemePreference>("System");
+  const [currentMode, setCurrentMode] = useState<ResolvedThemeMode>("Dark");
   const [currentColor, setCurrentColor] = useState(DEFAULT_COLOR);
-  const [currentMode, setCurrentMode] = useState<ThemeMode>(DEFAULT_MODE);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const mode = readStoredTheme();
+    const preference = readStoredThemePreference();
     const color = readStoredColor();
-    setCurrentMode(mode);
+    setThemePreferenceState(preference);
+    setCurrentMode(resolveThemeMode(preference));
     setCurrentColor(color);
     setIsHydrated(true);
   }, []);
@@ -51,14 +63,36 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyThemeToDocument(currentMode, currentColor);
   }, [currentMode, currentColor, isHydrated]);
 
-  const setModeValue = useCallback((mode: ThemeMode) => {
-    setCurrentMode(mode);
-    persistTheme(mode);
+  useEffect(() => {
+    if (!isHydrated || themePreference !== "System") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => {
+      setCurrentMode(getSystemTheme());
+    };
+
+    mediaQuery.addEventListener("change", onChange);
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, [isHydrated, themePreference]);
+
+  const setThemePreference = useCallback((preference: ThemePreference) => {
+    setThemePreferenceState(preference);
+    setCurrentMode(resolveThemeMode(preference));
+    persistThemePreference(preference);
   }, []);
+
+  const setModeValue = useCallback(
+    (preference: ThemePreference) => {
+      setThemePreference(preference);
+    },
+    [setThemePreference]
+  );
 
   const setMode = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setModeValue(e.target.value as ThemeMode);
+      setModeValue(e.target.value as ThemePreference);
     },
     [setModeValue]
   );
@@ -72,12 +106,23 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     () => ({
       currentColor,
       currentMode,
+      themePreference,
       isHydrated,
       setColor,
       setMode,
       setModeValue,
+      setThemePreference,
     }),
-    [currentColor, currentMode, isHydrated, setColor, setMode, setModeValue]
+    [
+      currentColor,
+      currentMode,
+      themePreference,
+      isHydrated,
+      setColor,
+      setMode,
+      setModeValue,
+      setThemePreference,
+    ]
   );
 
   return (

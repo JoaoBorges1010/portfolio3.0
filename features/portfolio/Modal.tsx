@@ -5,6 +5,8 @@ import { renderSkillIcons } from "@/lib/skill-icons";
 import Button from "@/components/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { ProjectImage } from "@/components/ui/ProjectImage";
+import { ProjectTransitionSurface } from "@/features/portfolio/ProjectTransitionSurface";
+import { getProjectViewTransitionName } from "@/lib/view-transition";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -24,7 +26,7 @@ const dropIn = {
     opacity: 1,
     transition: {
       duration: 0.1,
-      type: "spring",
+      type: "spring" as const,
       damping: 25,
       stiffness: 500,
     },
@@ -58,13 +60,15 @@ const Modal = ({ project, handleClose }: ModalProps) => {
         exit="exit"
       >
         <div className="z-modal fixed drop-shadow-md border border-light-gray top-[50%] left-[50%] h-[90vh] w-[90vw] sm:h-auto md:max-h-[90vh] sm:w-[90vw] sm:max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-dark p-[25px] focus:outline-none overflow-y-auto no-scrollbar accent-glow">
-          <ProjectImage
-            src={image}
-            alt={title}
-            width={450}
-            height={300}
-            className="w-full h-[30vh] object-cover"
-          />
+          <ProjectTransitionSurface name={getProjectViewTransitionName(project.id)}>
+            <ProjectImage
+              src={image}
+              alt={title}
+              width={450}
+              height={300}
+              className="w-full h-[30vh] object-cover"
+            />
+          </ProjectTransitionSurface>
           <div className="flex mt-4 mb-6 flex-row gap-3">
             {renderSkillIcons(skills)}
           </div>
