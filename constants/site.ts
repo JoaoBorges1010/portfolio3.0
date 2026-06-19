@@ -19,7 +19,8 @@ export const site = {
     nationality: "Portuguese",
     bio: `I'm João Borges, a budding web developer with a passion for coding. My journey began with a love for computers and gaming, especially games with customizable interfaces. I honed my coding skills at Le Wagon and haven't looked back since. I thrive on learning and aspire to master the art of coding. My quick learning abilities, combined with a lifelong love for technology, make me an adaptable and enthusiastic developer. My dream is to turn my passion into a profession and create exceptional digital experiences. Let's connect and embark on this coding journey together!`,
     profileImage: "/assets/Borges.jpeg",
-    resumePath: "/assets/JoaoBorgesCV.pdf",
+    resumePath: "/assets/Joao_Borges_CV.pdf",
+    resumeDownloadName: "Joao_Borges_CV.pdf",
   },
   hero: {
     typewriterWords: ["I'm a full stack web-developer", "<I Love to Code />"],

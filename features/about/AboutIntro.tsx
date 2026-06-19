@@ -62,7 +62,11 @@ const AboutIntro = () => {
             </div>
           </div>
           <div className="px-4 mt-auto pt-4">
-            <a className="block" href={site.about.resumePath} download>
+            <a
+              className="block"
+              href={site.about.resumePath}
+              download={site.about.resumeDownloadName}
+            >
               <Button variant="primary">Download resume</Button>
             </a>
           </div>
