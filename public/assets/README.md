@@ -8,4 +8,4 @@ Place project screenshots and profile assets here:
 - `Spotify_clone.png`
 - `Car_Hub1.png`
 - `Borges.jpeg`
-- `JoaoBorgesCV.pdf`
+- `Joao_Borges_CV.pdf`
